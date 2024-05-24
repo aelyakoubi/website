@@ -1,7 +1,17 @@
-import { Box, Heading, Input, Stack, Button, Flex } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
+import { Box, Heading, Input, Stack, Button, Flex, Select } from "@chakra-ui/react";
 
-export const AddEvent = ({ setFilteredEvents, events }) => {
+export const AddEvent = ({ setFilteredEvents, events, categories }) => {
+  const [newEvent, setNewEvent] = useState({
+    title: "",
+    description: "",
+    image: "",
+    startTime: "",
+    endTime: "",
+    category: "",
+    createdBy: "",
+  });
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -66,7 +76,14 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
             <Input name="image" placeholder="Image URL" />
             <Input type="datetime-local" name="startTime" />
             <Input type="datetime-local" name="endTime" />
-            <Input name="category" placeholder="Category" />
+<Select name="category" placeholder="Select Category">
+  {categories &&
+    categories.map((category) => (
+      <option key={category.id} value={category.name}>
+        {category.name}
+      </option>
+    ))}
+</Select>
             <Input name="createdBy" placeholder="Created By" />
             <Button
               type="submit"

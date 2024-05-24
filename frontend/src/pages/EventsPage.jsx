@@ -35,6 +35,7 @@ import { PasswordField } from "../FrontLogin/PasswordField";
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [categories, setCategories] = useState([]); // State for categories
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -43,6 +44,7 @@ export const EventsPage = () => {
 
   useEffect(() => {
     fetchEvents();
+    fetchCategories(); // Fetch categories on component mount
   }, []);
 
   const fetchEvents = async () => {
@@ -51,6 +53,15 @@ export const EventsPage = () => {
       const data = await response.json();
       setEvents(data);
       setFilteredEvents(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/categories");
+      const data = await response.json();
+      setCategories(data.categories); // Set the categories state
     } catch (error) {
       console.log(error);
     }
@@ -168,7 +179,12 @@ export const EventsPage = () => {
           <ModalHeader>Add New Event</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AddEvent events={events} setFilteredEvents={setFilteredEvents} />
+              {/* Pass categories as prop */}
+              <AddEvent
+              setFilteredEvents={setFilteredEvents}
+              events={events}
+              categories={categories}
+            />
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close Modal</Button>
