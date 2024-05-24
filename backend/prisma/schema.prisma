@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Category {
+  id     String  @id @default(uuid())
+  name   String
+  events Event[]
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  image       String
+  location    String
+  startTime   DateTime
+  endTime     DateTime
+  userId      String
+
+  categories Category[]
+  createdBy  User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id       String  @id @default(uuid())
+  username String  @unique
+  password String
+  name     String
+  image    String
+  events   Event[]
+}

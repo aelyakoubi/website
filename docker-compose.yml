@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/usr/src/app
+    command: npm run dev
+
+  prisma:
+    image: node:18
+    working_dir: /usr/src/app
+    volumes:
+      - ./backend:/usr/src/app
+    command: npx prisma studio
+    ports:
+      - "5555:5555"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+    command: npm run dev
