@@ -1,16 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Heading, Input, Stack, Button, Flex, Select } from "@chakra-ui/react";
 
 export const AddEvent = ({ setFilteredEvents, events, categories }) => {
-  const [newEvent, setNewEvent] = useState({
-    title: "",
-    description: "",
-    image: "",
-    startTime: "",
-    endTime: "",
-    category: "",
-    createdBy: "",
-  });
+  console.log("Categories in AddEvent:", categories); // Log categories
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,14 +17,17 @@ export const AddEvent = ({ setFilteredEvents, events, categories }) => {
       createdBy: form.createdBy.value,
     };
 
-    // Get token from localStorage
+    if (!newEvent.category) {
+      alert("Please select a category");
+      return;
+    }
+
     const token = localStorage.getItem('token');
 
-    // Add event logic
     fetch("http://localhost:3000/events", {
       method: "POST",
       headers: {
-        'Authorization': token, // Include the token directly in the Authorization header
+        'Authorization': token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newEvent),
@@ -44,7 +39,6 @@ export const AddEvent = ({ setFilteredEvents, events, categories }) => {
         return response.json();
       })
       .then((data) => {
-        // Update events array with the new event
         setFilteredEvents([...events, data]);
         form.reset();
         alert("Event added successfully!");
@@ -76,14 +70,13 @@ export const AddEvent = ({ setFilteredEvents, events, categories }) => {
             <Input name="image" placeholder="Image URL" />
             <Input type="datetime-local" name="startTime" />
             <Input type="datetime-local" name="endTime" />
-<Select name="category" placeholder="Select Category">
-  {categories &&
-    categories.map((category) => (
-      <option key={category.id} value={category.name}>
-        {category.name}
-      </option>
-    ))}
-</Select>
+            <Select name="category" placeholder="Select Category" required>
+              {categories && categories.map((category) => (
+                <option key={category.id} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </Select>
             <Input name="createdBy" placeholder="Created By" />
             <Button
               type="submit"

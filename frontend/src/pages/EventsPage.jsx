@@ -57,11 +57,13 @@ export const EventsPage = () => {
       console.log(error);
     }
   };
+
   const fetchCategories = async () => {
     try {
       const response = await fetch("http://localhost:3000/categories");
       const data = await response.json();
-      setCategories(data.categories); // Set the categories state
+      console.log("Fetched categories data:", data); // Log the fetched data
+      setCategories(data.categories || data); // Ensure the correct structure
     } catch (error) {
       console.log(error);
     }
@@ -179,8 +181,8 @@ export const EventsPage = () => {
           <ModalHeader>Add New Event</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-              {/* Pass categories as prop */}
-              <AddEvent
+            {/* Pass categories as prop */}
+            <AddEvent
               setFilteredEvents={setFilteredEvents}
               events={events}
               categories={categories}
