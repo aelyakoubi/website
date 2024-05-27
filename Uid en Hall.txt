@@ -1,5 +1,0 @@
-npm install har-validator@latest
-npm install uuid@latest
-
-
-npm install prisma@5.13.0 @prisma/client@5.13.0

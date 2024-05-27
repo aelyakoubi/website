@@ -26,7 +26,7 @@ export const EventSearch = ({ events, setFilteredEvents }) => {
       onChange={handleSearch}
       width={["30%", "30%"]}
       pl = {50}
-      ml={10}
+      ml={0}
 
       mt={10}
       
