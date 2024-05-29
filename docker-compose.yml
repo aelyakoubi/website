@@ -8,6 +8,8 @@ services:
     volumes:
       - ./backend:/usr/src/app
     command: npm run dev
+    depends_on:
+      - prisma
 
   prisma:
     image: node:18

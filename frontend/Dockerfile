@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm cache clean --force && npm install
+# Remove existing node_modules and package-lock.json to ensure clean install
+RUN rm -rf node_modules package-lock.json && npm install
 
 COPY . .
 

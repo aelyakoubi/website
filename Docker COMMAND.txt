@@ -1,15 +1,9 @@
+docker-compose up
 
-docker-compose down               OFF / Remove
-
-docker-compose up --build         ON  / Build 
-
+docker-compose down
 
 
 
-Rebuild the Docker image to ensure a fresh installation of all dependencies:
-
+//////////////////////////////// with problems
 docker-compose build --no-cache
-
-Start the containers again:
-
 docker-compose up
