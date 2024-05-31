@@ -12,9 +12,10 @@
 - Paypal or Stripe
 
 - testing
-- Hosting
+- hosting
 - cookies
 - SEO
 - SEA
+- AWS / S3
 
 
