@@ -1,29 +1,31 @@
 version: '3.8'
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+
   backend:
-    build: ./backend
+    build:
+      context: ./backend
     ports:
       - "3000:3000"
     volumes:
       - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
     command: npm run dev
-    depends_on:
-      - prisma
 
   prisma:
     image: node:18
     working_dir: /usr/src/app
     volumes:
-      - ./backend:/usr/src/app
-    command: npx prisma studio
+      - ./prisma:/usr/src/app
     ports:
       - "5555:5555"
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/usr/src/app
-    command: npm run dev
+    command: npx prisma studio

@@ -40,42 +40,54 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const newEvent = {
-      title: form.title.value,
-      description: form.description.value,
-      image: form.image.value,
-      startTime: form.startTime.value,
-      endTime: form.endTime.value,
-      category: form.category.value,
-      createdBy: form.createdBy.value,
-    };
+    const selectedCategoryId = form.category.value; // Retrieve the selected category ID
 
+     // Define startTime and endTime constants with the correct format
+  const startTime = form.startTime.value + ":00";
+  const endTime = form.endTime.value + ":00";
+  
+  const newEvent = {
+    title: form.title.value,
+    description: form.description.value,
+    image: form.image.value,
+    startTime: new Date(startTime).toISOString(), // Convert to ISO-8601 DateTime
+    endTime: new Date(endTime).toISOString(), // Convert to ISO-8601 DateTime
+    location: form.location.value, // Included
+    category: form.category.value,
+    categoryIds: [selectedCategoryId],
+    createdBy: form.createdBy.value,
+  };
+  
     const token = localStorage.getItem("token");
-
-    fetch("http://localhost:3000/events", {
-      method: "POST",
-      headers: {
-        Authorization: token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newEvent),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to add event");
-        }
-        return response.json();
-      })
-      .then((data) => {
+  
+    try {
+      const response = await fetch("http://localhost:3000/events", {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newEvent),
+      });
+  
+      if (response.ok) {
+        // Event created successfully, update state or any actions
+        const data = await response.json();
         setFilteredEvents([...events, data]);
         form.reset();
         alert("Event added successfully!");
-      })
-      .catch((error) => {
-        console.error(error);
-        alert("Failed to add event!");
-      });
+      } else {
+        // Handle error response
+        const errorData = await response.json();
+        console.error("Failed to create event:", errorData);
+        alert(`Failed to create event: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error creating event:", error);
+      alert("Failed to add event!");
+    }
   };
+  
 
   return (
     <>
@@ -110,7 +122,7 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
         <ModalContent>
           <ModalHeader>Add New Event</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody>                                         
             <Flex>
               <Box
                 bg={"white"}
@@ -131,6 +143,7 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
                     <Input name="image" placeholder="Image URL" />
                     <Input type="datetime-local" name="startTime" />
                     <Input type="datetime-local" name="endTime" />
+                    <Input name="location" placeholder="Location" /> {/* Include location field */}
                     <Select name="category" placeholder="Select Category" required>
                       {categories.map((category) => (
                         <option key={category.id} value={category.name}>
@@ -138,7 +151,7 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
                         </option>
                       ))}
                     </Select>
-                  <Input name="createdBy" placeholder="Created By" />
+                    <Input name="createdBy" placeholder="Created By" />
                     <Button
                       type="submit"
                       borderRadius="15px"
@@ -168,3 +181,5 @@ export const AddEvent = ({ setFilteredEvents, events }) => {
     </>
   );
 };
+
+export default AddEvent;

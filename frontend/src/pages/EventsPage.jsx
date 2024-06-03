@@ -63,8 +63,8 @@ export const EventsPage = () => {
     <Heading as="h1" textAlign="center" mt="13">
         Winc's Events
       </Heading>
-     
-    <AddEvent setFilteredEvents={setFilteredEvents} events={events} />
+      <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} />
+
     <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
 
     <Stack
