@@ -3,9 +3,9 @@ import {
   Box,
   Heading,
   Text,
-  Flex,
   Stack,
   Button,
+  Flex,
   Container,
   FormControl,
   FormLabel,
@@ -57,17 +57,24 @@ export const EventsPage = () => {
   };
 
   const userIsAuthenticated = isAuthenticated();
+  const userId = userIsAuthenticated ? JSON.parse(localStorage.getItem('user'))?.id : null;
+
+  const handleEventClick = (eventId) => {
+    if (userIsAuthenticated) {
+      navigate(`/event/${eventId}`);
+    } else {
+      alert("Please log in or sign up to view event details.");
+    }
+  };
 
   return (
     <>
-    <Heading as="h1" textAlign="center" mt="13">
+      <Heading as="h1" textAlign="center" mt="13">
         Winc's Events
       </Heading>
-      <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} />
-
-    <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
-
-    <Stack
+      <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} userId={userId} />
+      <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
+      <Stack
         spacing={4}
         h="60vh"
         flexDir="row"
@@ -76,7 +83,7 @@ export const EventsPage = () => {
         ml="auto"
         mt={50}
       >
-        {filteredEvents.map((event) => (
+      {filteredEvents && filteredEvents.map((event) => (
           <Box
             key={event.id}
             borderWidth="7px"
@@ -103,106 +110,87 @@ export const EventsPage = () => {
               boxShadow: "0 0 8px 2px rgba(128, 78, 254, 0.5)",
             }}
             _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
-            onClick={() => navigate(`/event/${event.id}`)}
+            onClick={() => handleEventClick(event.id)}
           >
-            <Link to={`/event/${event.id}`}>
-              <Box _hover={{ color: "purple" }}>
-                <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
-                  {event.title}
-                </Heading>
-                <Text>{event.description}</Text>
-                <Text>{event.startTime}</Text>
-                <Text>{event.endTime}</Text>
-                <Text>Category: {event.category}</Text>
-                <Text>Created by: {event.createdBy}</Text>
-              </Box>
-            </Link>
+            <Box _hover={{ color: "purple" }}>
+              <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
+                {event.title}     
+              </Heading>
+              <Text>{event.description}</Text>
+              <Text>{event.startTime}</Text>
+              <Text>{event.endTime}</Text>
+              <Text>Category: {event.category}</Text>
+              <Text>Created by: {event.createdBy}</Text>
+            </Box>
           </Box>
         ))}
       </Stack>
 
-
-
-
-    <Container maxW="container.lg" position="relative">
-      <Flex
-        direction="column"
-        align="flex-end"
-        position="absolute"
-        top="0"
-        right="0"
-        zIndex="1"
-        p="4"
-      >
-        {userIsAuthenticated && <Logo />}
-      </Flex>
-      {!userIsAuthenticated && (
-        <Stack spacing="2">
-          <Text color="gray.500" textAlign="center">
-            Don't have an account? <Link as={RouterLink} to="#">Sign up</Link>
-          </Text>
-          <Box
-            py={{ base: "0", sm: "8" }}
-            px={{ base: "4", sm: "10" }}
-            bg={{ base: "transparent", sm: "white" }}
-            boxShadow={{ base: "none", sm: "md" }}
-            borderRadius={{ base: "none", sm: "ml" }}
-          >
-            <Stack spacing="6">
-              <Stack spacing="5">
-                <FormControl>
-                  <FormLabel htmlFor="username">Username</FormLabel>
-                  <Input
-                    id="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </FormControl>
-                <PasswordField
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </Stack>
-              <HStack justify="space-between">
-                <Checkbox defaultChecked>Remember me</Checkbox>
-                <Button variant="link" size="sm">
-                  Forgot password?
-                </Button>
-              </HStack>
+      <Container maxW="container.lg" position="relative">
+        <Flex
+          direction="column"
+          align="flex-end"
+          position="absolute"
+          top="0"
+          right="0"
+          zIndex="1"
+          p="4"
+        >
+          {userIsAuthenticated && <Logo />}
+        </Flex>
+        {!userIsAuthenticated && (
+          <Stack spacing="2">
+            <Text color="gray.500" textAlign="center">
+              Don't have an account? <Link as={RouterLink} to="#">Sign up</Link>
+            </Text>
+            <Box
+              py={{ base: "0", sm: "8" }}
+              px={{ base: "4", sm: "10" }}
+              bg={{ base: "transparent", sm: "white" }}
+              boxShadow={{ base: "none", sm: "md" }}
+              borderRadius={{ base: "none", sm: "ml" }}
+            >
               <Stack spacing="6">
-                <Button onClick={() => handleLogin(username, password, closeModal)}>
-                  Sign in
-                </Button>
-                <HStack>
-                  <Divider />
-                  <Text textStyle="sm" whiteSpace="nowrap" color="gray.500">
-                    or continue with
-                  </Text>
-                  <Divider />
+                <Stack spacing="5">
+                  <FormControl>
+                    <FormLabel htmlFor="username">Username</FormLabel>
+                    <Input
+                      id="username"
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </FormControl>
+                  <PasswordField
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </Stack>
+                <HStack justify="space-between">
+                  <Checkbox defaultChecked>Remember me</Checkbox>
+                  <Button variant="link" size="sm">
+                    Forgot password?
+                  </Button>
                 </HStack>
-                <OAuthButtonGroup />
+                <Stack spacing="6">
+                  <Button onClick={() => handleLogin(username, password, closeModal)}>
+                    Sign in
+                  </Button>
+                  <HStack>
+                    <Divider />
+                    <Text textStyle="sm" whiteSpace="nowrap" color="gray.500">
+                      or continue with
+                    </Text>
+                    <Divider />
+                  </HStack>
+                  <OAuthButtonGroup />
+                </Stack>
               </Stack>
-            </Stack>
-          </Box>
-        </Stack>
-      )}
-
-
-      <Box>
-        {/* Placeholder Box, add your additional content here if needed */}
-      </Box>
-
-   
-    </Container>
+            </Box>
+          </Stack>
+        )}
+      </Container>
     </>
   );
 };
-
-
-
-
-
-
-
