@@ -22,5 +22,5 @@
 - SEA
 - AWS / S3
 
-- Mobile App Android and Ios
+- Mobile App Android and Ios.
 
