@@ -64,7 +64,7 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`,  //  "Bearer " before the token
+          Authorization: `Bearer ${token}`,  
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newEvent),
