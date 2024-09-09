@@ -27,9 +27,11 @@ router.post("/", auth, async (req, res, next) => {
       image,
       startTime,
       endTime,
-      createdBy,
       categoryIds,
     } = req.body;
+
+    const createdBy = req.user.id; // Use the authenticated user's ID from req.user
+
     const newEvent = await createEvent(
       title,
       description,
@@ -37,14 +39,16 @@ router.post("/", auth, async (req, res, next) => {
       image,
       startTime,
       endTime,
-      createdBy,
+      createdBy, // Pass the user's ID here
       categoryIds
     );
+
     res.status(201).json(newEvent);
   } catch (error) {
     next(error);
   }
 });
+
 
 router.get("/:id", async (req, res, next) => {
   try {
