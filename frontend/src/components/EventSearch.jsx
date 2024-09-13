@@ -7,14 +7,19 @@ export const EventSearch = ({ events, setFilteredEvents }) => {
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
-
+  
     const filteredEvents = events.filter((event) => {
-      const titleMatch = event.title.toLowerCase().includes(searchTerm);
-      const categoryMatch = event.category.toLowerCase().includes(searchTerm);
-
+      const title = event.title ? event.title.toLowerCase() : ""; // Handle undefined title
+      const category = event.category ? event.category.toLowerCase() : ""; // Handle undefined category
+  
+      const titleMatch = title.includes(searchTerm);
+      const categoryMatch = category.includes(searchTerm);
+  
       return titleMatch || categoryMatch;
     });
-
+  
+    console.log("Filtered Events:", filteredEvents); // Debugging line
+  
     setFilteredEvents(filteredEvents);
   };
 
