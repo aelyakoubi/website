@@ -30,7 +30,9 @@ router.post("/", auth, async (req, res, next) => {
       categoryIds,
     } = req.body;
 
-    const createdBy = req.user.id; // Use the authenticated user's ID from req.user
+    const createdBy = req.user.userId; // Extract userId from the token
+
+    console.log('Decoded token userId:', createdBy);  // Debugging line
 
     const newEvent = await createEvent(
       title,
@@ -39,7 +41,7 @@ router.post("/", auth, async (req, res, next) => {
       image,
       startTime,
       endTime,
-      createdBy, // Pass the user's ID here
+      createdBy, // Pass the userId here
       categoryIds
     );
 
@@ -48,8 +50,6 @@ router.post("/", auth, async (req, res, next) => {
     next(error);
   }
 });
-
-
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;

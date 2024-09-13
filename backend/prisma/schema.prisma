@@ -14,7 +14,7 @@ generator client {
 model Category {
   id     String  @id @default(uuid())
   name   String
-  events Event[]
+  events Event[] @relation("EventCategories")
 }
 
 model Event {
@@ -27,8 +27,8 @@ model Event {
   endTime     DateTime
   userId      String
 
-  categories Category[]
-  createdBy  User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories  Category[] @relation("EventCategories")
 
   @@index([userId])
 }

@@ -9,6 +9,7 @@ export const EventPage = () => {
   const [event, setEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState({});
   const [eventUser, setEventUser] = useState(null);
+  const token = localStorage.getItem("token"); // Get the token from local storage
 
   useEffect(() => {
     fetch(`http://localhost:3000/events/${eventId}`)

@@ -1,5 +1,4 @@
 // AuthUtils.js
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 export const handleLogin = async (username, password, onClose) => {
   try {
@@ -21,29 +20,25 @@ export const handleLogin = async (username, password, onClose) => {
 
       if (token) {
         localStorage.setItem('token', token); // Store the token in localStorage
-        console.log("Login successful, token stored."); // Log success
         onClose(); // Close the modal after successful login
       } else {
-        console.error("No token received, invalid username or password."); // Log error
         throw new Error("Invalid username or password");
       }
     } else {
-      console.error("Login failed with status:", response.status); // Log failed response status
       throw new Error("Invalid username or password");
     }
   } catch (error) {
-    console.error("Login failed:", error); // Handle login failure, such as displaying error messages
+    console.error("Login failed:", error);
+    // Handle login failure, such as displaying error messages
   }
 };
 
 export const isAuthenticated = () => {
   const token = localStorage.getItem('token');
-  console.log("Checking authentication, token found:", !!token); // Log token existence
   return !!token; // Return true if a token exists, false otherwise
 };
 
 export const logoutUser = () => {
   localStorage.removeItem('token');
-  console.log("User logged out, token removed."); // Log logout action
-  window.location.href = '/'; // Redirect to login page after logout
+  window.location.href = '/'; // Redirect to login Eventspage after logout
 };
