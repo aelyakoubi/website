@@ -1,7 +1,7 @@
 ```... Still under construction !!!```
 
 - Sign up    page
-- Contact us page  + <-> database
+- Contact us page  + form <-> database
 - About us   page
 - Authentication upgrade to Advanced / Bearer token
 - Authorisation for users to their own events
