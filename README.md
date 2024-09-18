@@ -1,4 +1,5 @@
 ```... Still under construction !!!```
+The .env file is included for testing!
 
 - Sign up    page
 - Contact us page  + form <-> database
