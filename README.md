@@ -3,7 +3,6 @@
 - Sign up    page
 - Contact us page  + form <-> database
 - About us   page
-- Authentication upgrade to Advanced / Bearer token
 - Authorisation for users to their own events
 - cors    *       security upgrade / backend/src/index.js
 - 3e party login Google, Github and with 'X'
@@ -21,6 +20,5 @@
 - SEO
 - SEA
 - AWS / S3
-
 - Mobile App Android and Ios.
 
