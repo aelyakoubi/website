@@ -1,7 +1,7 @@
 // LogoutTimer.jsx
 
 import { useEffect } from 'react';
-import { logoutUser } from '../FrontLogin/AuthUtils'; // Adjust the import path as needed
+//import { logoutUser } from '../FrontLogin/AuthUtils'; // Adjust the import path as needed
 
 const LogoutTimer = () => {
   let logoutTimer;

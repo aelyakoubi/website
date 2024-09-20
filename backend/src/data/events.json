@@ -18,7 +18,7 @@
       "description": "Let's play laser tag!",
       "image": "https://www.ctvnews.ca/polopoly_fs/1.5118552.1600965663!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg",
       "categoryIds": ["2"],
-      "location": "Blinded by the Lights Laser Tag, 15 Main St. London",
+      "location": "Main street 12, London, England",
       "startTime": "2023-04-06T18:46:00.000Z",
       "endTime": "2023-04-06T17:46:00.000Z"
     },
@@ -38,7 +38,7 @@
       "createdBy": "2",
       "title": "Yoga",
       "description": "It's a bit of a stretch.",
-      "image": "https://ymcasouthflorida.org/wp-content/uploads/2019/12/AA2I8910-scaled.jpg",
+      "image": "https://thewholeu.uw.edu/wp-content/uploads/yoga-gettyimages-1142820079-promo-copy.jpg",
       "categoryIds": ["3"],
       "location": "Shavasana Yoga School, Utrecht",
       "startTime": "2023-03-09T06:00:00.000Z",
@@ -87,6 +87,72 @@
     "location": "Shasi School, Maastricht",
     "startTime": "2023-03-09T07:00:00.000Z",
     "endTime": "2023-03-09T09:00:00.000Z"
-  }
+  },
+  {
+    "id": "9",
+    "createdBy": "1",
+    "title": "Laser Tag mania",
+    "description": "Let's play laser tag!",
+    "image": "https://www.ctvnews.ca/polopoly_fs/1.5118552.1600965663!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg",
+    "categoryIds": ["2"],
+    "location": "Main street 12, London, England",
+    "startTime": "2023-04-07T18:46:00.000Z",
+    "endTime": "2023-04-08T17:46:00.000Z"
+  },
+  {
+    "id": "10",
+    "createdBy": "2",
+    "title": "Card Race game",
+    "description": "Amazing course!",
+    "image": "https://rhpk.co.uk/wp-content/uploads/2016/06/Matt-England_7790-edit-660x330.jpg",
+    "categoryIds": ["1"],
+    "location": "The Park, Den Bosch",
+    "startTime": "2023-03-16T12:00:00.000Z",
+    "endTime": "2023-03-17T13:30:00.000Z"
+  },
+  {
+    "id": "11",
+    "createdBy": "2",
+    "title": "Football tournament",
+    "description": "Let's play football",
+    "image": "https://www.voetbalreizenxl.nl/wp-content/uploads/2019/05/FC-Barcelona-CampNou.jpg",
+    "categoryIds": ["3"],
+    "location": "Shavasana Yoga School, Utrecht",
+    "startTime": "2023-03-10T06:00:00.000Z",
+    "endTime": "2023-03-11T07:00:00.000Z"
+  },
+  {
+  "id": "12",
+  "createdBy": "1",
+  "title": "Baseball Event",
+  "description": "Let's hit the ball",
+  "image": "https://i.abcnewsfe.com/a/54508fa4-688e-4072-bbf0-67930d1d0336/baseball-1-ap-gmh-230901_1693579673197_hpMain.jpg?",
+  "categoryIds": ["2"],
+  "location": "My back yard, Turnhout",
+  "startTime": "2023-03-15T18:00:00.000Z",
+  "endTime": "2023-03-16T17:00:00.000Z"
+},
+{
+  "id": "13",
+  "createdBy": "1",
+  "title": "Ping Pong Event",
+  "description": "Be ready to hit the ball",
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSR6gJaFPIA05iasHEjyU7mD7r0M5YpfcOuUg&s",
+  "categoryIds": ["1"],
+  "location": "Noordhavenweg 100, Amsterdam",
+  "startTime": "2023-04-12T18:46:00.000Z",
+  "endTime": "2023-04-13T17:46:00.000Z"
+},
+{
+  "id": "14",
+  "createdBy": "2",
+  "title": "Neighborhood event residents",
+  "description": "Be social",
+  "image": "https://asset.gallup.com/p/TGBCMS/00efd2da-7ab8-44c6-921f-5a7c44b7cdfd.jpg",
+  "categoryIds": ["1"],
+  "location": "The Park, Lelystad",
+  "startTime": "2023-03-18T12:00:00.000Z",
+  "endTime": "2023-03-19T13:30:00.000Z"
+}
 ]
 }

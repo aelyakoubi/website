@@ -38,7 +38,3 @@ export const isAuthenticated = () => {
   return !!token; // Return true if a token exists, false otherwise
 };
 
-export const logoutUser = () => {
-  localStorage.removeItem('token');
-  window.location.href = '/'; // Redirect to login Eventspage after logout
-};

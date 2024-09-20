@@ -16,6 +16,9 @@ const createEvent = async (
     throw new Error("User ID (createdBy) is required to create an event.");
   }
 
+  // Log the received category IDs
+  console.log("Category IDs received:", categoryIds);
+  
   try {
     const event = await prisma.event.create({
       data: {

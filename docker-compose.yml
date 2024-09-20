@@ -1,31 +1,19 @@
 version: '3.8'
-
 services:
   frontend:
     build:
       context: ./frontend
     ports:
       - "5173:5173"
-    volumes:
-      - ./frontend:/usr/src/app
-      - /usr/src/app/node_modules
-    command: npm run dev
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://backend:3000
 
   backend:
     build:
       context: ./backend
     ports:
       - "3000:3000"
-    volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
-    command: npm run dev
-
-  prisma:
-    image: node:18
-    working_dir: /usr/src/app
-    volumes:
-      - ./prisma:/usr/src/app
-    ports:
-      - "5555:5555"
-    command: npx prisma studio
+    environment:
+      - NODE_ENV=development

@@ -13,8 +13,8 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port that the app runs on
+# Expose port 5173 for the frontend
 EXPOSE 5173
 
-# Start the application
+# Start the frontend application
 CMD ["npm", "run", "dev"]

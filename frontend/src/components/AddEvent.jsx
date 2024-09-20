@@ -22,6 +22,9 @@ import backgroundImage from "../components/backgroundImage.jpg"; // Import backg
 
 export const AddEvent = ({ setFilteredEvents, events, userId }) => {
   const [categories, setCategories] = useState([]);
+  const [location, setLocation] = useState(''); // Added state to track location input
+  const maxLength = 30; // Maximum allowed characters for location
+  
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -47,16 +50,24 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
     const startTime = form.startTime.value + ":00";
     const endTime = form.endTime.value + ":00";
 
+    // Log userId value
+    console.log("User ID:", userId);
+
+    // Initialize newEvent object
     const newEvent = {
       title: form.title.value,
       description: form.description.value,
       image: form.image.value,
       startTime: new Date(startTime).toISOString(),
       endTime: new Date(endTime).toISOString(),
-      location: form.location.value,
+      location: location, // Use the state value for location
       categoryIds: [selectedCategoryId],
       createdBy: userId,
     };
+
+    // Console logs for debugging
+    console.log("Selected Category ID:", selectedCategoryId);
+    console.log("New Event Object:", newEvent);
 
     const token = localStorage.getItem("token");
 
@@ -84,6 +95,10 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
       console.error("Error creating event:", error);
       alert("Failed to add event!");
     }
+  };
+
+  const handleLocationChange = (e) => {
+    setLocation(e.target.value); // Update location state as user types
   };
 
   return (
@@ -147,7 +162,25 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
                       <Input name="image" placeholder="Image URL" />
                       <Input type="datetime-local" name="startTime" placeholder="Start Time" required />
                       <Input type="datetime-local" name="endTime" placeholder="End Time" required />
-                      <Input name="location" placeholder="Location" required />
+                      
+                      {/* Modified location input */}
+                      <Input 
+                        name="location" 
+                        placeholder="Location" 
+                        value={location} // Bind input value to state
+                        onChange={handleLocationChange} // Handle location input changes
+                        maxLength={maxLength + 1} // Allow to type beyond limit for notification purposes
+                        required 
+                      />
+                      {location.length > maxLength && (
+                        <Text color="red.500" fontSize="sm">
+                          Location cannot exceed {maxLength} characters.
+                        </Text>
+                      )}
+                      <Text fontSize="sm">
+                        {location.length}/{maxLength} characters
+                      </Text>
+                      
                       <Select name="category" placeholder="Select Category" required>
                         {categories.map((category) => (
                           <option key={category.id} value={category.id}>
@@ -175,4 +208,3 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
 };
 
 export default AddEvent;
-

@@ -27,8 +27,8 @@ model Event {
   endTime     DateTime
   userId      String
 
-  createdBy   User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categories  Category[] @relation("EventCategories")
+  createdBy  User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories Category[] @relation("EventCategories")
 
   @@index([userId])
 }

@@ -28,6 +28,7 @@ export const Navigation = () => {
                 bg={"gray.300"}
                 letterSpacing={5.5}
                 mt={8}
+                ml="-1500"
                 type="submit"
                 borderRadius="15px"
                 border="3px solid"

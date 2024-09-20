@@ -18,7 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^5.14.0",
+    "@prisma/client": "^5.19.1",
     "@sentry/node": "^7.79.0",
     "@sentry/profiling-node": "^1.2.6",
     "cors": "^2.8.5",
