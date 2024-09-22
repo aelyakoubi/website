@@ -36,11 +36,23 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
       const response = await fetch("http://localhost:3000/categories");
       const data = await response.json();
       console.log("Fetched categories data:", data);
-      setCategories(data.categories || data);
+  
+      // Ensure categories is an array
+      if (Array.isArray(data.categories)) {
+        setCategories(data.categories);
+      } else if (Array.isArray(data)) {
+        setCategories(data);
+      } else {
+        console.error("Unexpected data format:", data);
+        setCategories([]); // Set to an empty array if format is not as expected
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching categories:", error);
+      setCategories([]); // Reset categories on error
     }
   };
+  
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -182,12 +194,17 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
                       </Text>
                       
                       <Select name="category" placeholder="Select Category" required>
-                        {categories.map((category) => (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                        ))}
-                      </Select>
+  {Array.isArray(categories) && categories.length > 0 ? (
+    categories.map((category) => (
+      <option key={category.id} value={category.id}>
+        {category.name}
+      </option>
+    ))
+  ) : (
+    <option disabled>No categories available</option>
+  )}
+</Select>
+
                       <Input name="createdBy" placeholder="Created By" />
                       <Button type="submit" colorScheme="blue">
                         Add Event

@@ -45,22 +45,31 @@ export const EventsPage = () => {
     try {
       const response = await fetch("http://localhost:3000/events");
       const data = await response.json();
-      setEvents(data);
-      setFilteredEvents(data);
+      if (Array.isArray(data)) {
+        setEvents(data);
+        setFilteredEvents(data);
+      } else {
+        console.error("Fetched events data is not an array", data);
+        setFilteredEvents([]); // Set to empty array if not valid
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching events:", error);
+      setFilteredEvents([]); // Handle error state gracefully
     }
   };
 
+  
   const fetchCategories = async () => {
     try {
       const response = await fetch("http://localhost:3000/categories");
       const data = await response.json();
       setCategories(data);
+      console.log("Fetched Categories:", data); // Add this line to debug
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching categories:", error);
     }
   };
+  
 
   const closeModal = () => {
     setError("");
@@ -82,19 +91,19 @@ export const EventsPage = () => {
   };
 
   const getCategoryName = (id) => {
-    const category = categories.find((cat) => cat.id === id);
+    const category = categories.find((cat) => String(cat.id) === String(id)); // Compare IDs as strings
     return category ? category.name : "Unknown";
   };
-
+  
+  
   return (
     <>
-    
       <LogoutTimer /> {/* Add LogoutTimer component to track user inactivity */}
-
+  
       <Heading as="h1" textAlign="center" mt="13">
         Winc's Events
       </Heading>
-
+  
       <Container maxW="container.lg" position="relative" mt="4" zIndex="2">
         <Flex
           direction="column"
@@ -108,6 +117,7 @@ export const EventsPage = () => {
           {userIsAuthenticated && <Logo />}
           {userIsAuthenticated && <LogoutButton />} {/* Add LogoutButton for authenticated users */}
         </Flex>
+  
         {!userIsAuthenticated && (
           <Stack spacing="2">
             <Text color="gray.500" textAlign="center">
@@ -162,66 +172,76 @@ export const EventsPage = () => {
           </Stack>
         )}
       </Container>
-
+  
       <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} userId={userId} />
       <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
+  
       <Stack
-        spacing={4}
-        h="50vh" 
-        flexDir="row"
-        flexWrap="wrap"
-        justifyContent="space-around"
-        ml="auto"
-        mt={50}
+  spacing={4}
+  flexDir="row"
+  flexWrap="wrap"
+  justifyContent="space-around"
+  ml="auto"
+  mt={50}
+>
+  {Array.isArray(filteredEvents) && filteredEvents.length > 0 ? (
+    filteredEvents.map((event) => (
+      <Box
+        key={event.id}
+        borderWidth="7px"
+        boxShadow="dark-lg"
+        w="250px"
+        bg="white"
+        align="center"
+        bgImage={`url(${event.image})`}
+        bgSize="cover"
+        bgPosition="center"
+        borderRadius="15px"
+        border="3px solid"
+        padding="0.6em 1.2em"
+        fontSize="1em"
+        fontWeight="extrabold"
+        fontFamily="inherit"
+        fontStyle="bold"
+        color={"black"}
+        cursor="pointer"
+        transition="border-color 0.25s, box-shadow 0.25s"
+        _hover={{
+          borderColor: "purple",
+          boxShadow: "0 0 8px 2px rgba(128, 78, 254, 0.5)",
+        }}
+        _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
+        onClick={() => handleEventClick(event.id)}
       >
-        {filteredEvents &&
-          filteredEvents.map((event) => (
-            <Box
-              key={event.id}
-              borderWidth="7px"
-              boxShadow="dark-lg"
-              w="250px"
-              h="250px"
-              bg="white"
-              align="center"
-              bgImage={`url(${event.image})`}
-              bgSize="cover"
-              bgPosition="center"
-              borderRadius="15px"
-              border="3px solid"
-              padding="0.6em 1.2em"
-              fontSize="1em"
-              fontWeight="extrabold"
-              fontFamily="inherit"
-              fontStyle="bold"
-              color={"black"}
-              cursor="pointer"
-              transition="border-color 0.25s, box-shadow 0.25s"
-              _hover={{
-                borderColor: "purple",
-                boxShadow: "0 0 8px 2px rgba(128, 78, 254, 0.5)",
-              }}
-              _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
-              onClick={() => handleEventClick(event.id)}
-            >
-              <Box _hover={{ color: "purple" }}>
-                <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
-                  {event.title}
-                </Heading>
-                <Text>{event.description}</Text>
-                <Text>{event.startTime}</Text>
-                <Text>{event.endTime}</Text>
-                <Text>{event.location}</Text>
-                {/* Check if categoryIds exists before mapping */}
-                {event.categoryIds && event.categoryIds.length > 0 ? (
-                  <Text>{event.categoryIds.map(id => getCategoryName(id)).join(', ')}</Text>
-                ) : (
-                  <Text>No categories</Text>
-                )}
-              </Box>
-            </Box>
-          ))}
-      </Stack>
+        <Box p="4" bg="rgba(255, 255, 255, 0.3)">
+          <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
+            {event.title}
+          </Heading>
+          <Text isTruncated>{event.description}</Text>
+          <Text>{new Date(event.startTime).toLocaleString()}</Text>
+          <Text>{new Date(event.endTime).toLocaleString()}</Text>
+          <Text>{event.location}</Text>
+          <Text>
+  {event.categoryIds && Array.isArray(event.categoryIds) && event.categoryIds.length > 0 ? (
+    event.categoryIds.map(id => {
+      const name = getCategoryName(id);
+      console.log(`ID: ${id}, Name: ${name}`); // Debugging log
+      return name;
+    }).join(', ')
+  ) : (
+    "No event categories are filled in."
+  )}
+</Text>
+
+        </Box>
+      </Box>
+    ))
+  ) : (
+    <Text>No events available.</Text>
+  )}
+</Stack>
+
+
     </>
   );
-};
+}  

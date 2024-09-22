@@ -10,51 +10,65 @@ async function main() {
   const { users } = userData;
   const { categories } = categoryData;
 
+  // Upsert categories
   for (const category of categories) {
-    await prisma.category.upsert({
-      where: { id: category.id },
-      update: {},
-      create: category,
-    });
+    try {
+      await prisma.category.upsert({
+        where: { id: category.id },
+        update: {},
+        create: category,
+      });
+      console.log(`Category upserted: ${category.id}`);
+    } catch (error) {
+      console.error(`Error upserting category ${category.id}:`, error);
+    }
   }
 
+  // Upsert users
   for (const user of users) {
-    await prisma.user.upsert({
-      where: { id: user.id },
-      update: {},
-      create: user,
-    });
+    try {
+      await prisma.user.upsert({
+        where: { id: user.id },
+        update: {},
+        create: user,
+      });
+      console.log(`User upserted: ${user.id}`);
+    } catch (error) {
+      console.error(`Error upserting user ${user.id}:`, error);
+    }
   }
 
+  // Upsert events
   for (const event of events) {
-    // Check if event has categoryIds property
-    if (event.categoryIds) {
+    try {
+      const eventData = {
+        id: event.id,
+        title: event.title,
+        description: event.description,
+        startTime: event.startTime,
+        endTime: event.endTime,
+        location: event.location,
+        image: event.image,
+        categories: event.categoryIds ? {
+          connect: event.categoryIds.map((id) => ({ id })),
+        } : undefined,
+        createdBy: {
+          connect: { id: event.createdBy },
+        },
+      };
+
       await prisma.event.upsert({
         where: { id: event.id },
         update: {},
-        create: {
-          id: event.id,
-          title: event.title,
-          description: event.description,
-          startTime: event.startTime,
-          endTime: event.endTime,
-          location: event.location,
-          image: event.image,
-          categories: {
-            connect: event.categoryIds.map((id) => ({ id })),
-          },
-          createdBy: {
-            connect: { id: event.createdBy },
-          },
-        },
+        create: eventData,
       });
-    } else {
-      // Handle case where categoryIds property is missing or undefined
-      console.error(`CategoryIds missing for event with ID ${event.id}`);
+
+      console.log(`Event upserted: ${event.id}`);
+    } catch (error) {
+      console.error(`Error upserting event ${event.id}:`, error);
     }
   }
 }
-  
 
 main()
   .then(async () => {
