@@ -20,19 +20,13 @@ router.get("/", async (req, res, next) => {
 router.post("/", auth, async (req, res, next) => {
   try {
     const { name } = req.body;
-
-    // Validate name
-    if (!name || typeof name !== 'string' || name.trim().length === 0) {
-      return res.status(400).json({ message: "Category name is required." });
-    }
-
     const newCategory = await createCategory(name);
+
     res.status(201).json(newCategory);
   } catch (error) {
     next(error);
   }
 });
-
 
 router.get("/:id", async (req, res, next) => {
   try {

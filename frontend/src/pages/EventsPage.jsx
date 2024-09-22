@@ -98,6 +98,26 @@ export const EventsPage = () => {
   
   return (
     <>
+<Box bg="gray.900" p={3} mr={5} >
+  <Flex as="nav" justify="space-between">
+    <HStack spacing={4}>
+      <Link as={RouterLink} to="/" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
+        Home
+      </Link>
+      <Link as={RouterLink} to="/About us" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
+        About us
+      </Link>
+      <Link as={RouterLink} to="/Contact" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
+        Contact
+      </Link>
+      <Link as={RouterLink} to="/Sign up" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
+        Sign up
+      </Link>
+    </HStack>
+  </Flex>
+</Box>
+
+    
       <LogoutTimer /> {/* Add LogoutTimer component to track user inactivity */}
   
       <Heading as="h1" textAlign="center" mt="13">
@@ -241,6 +261,9 @@ export const EventsPage = () => {
   )}
 </Stack>
 
+<Box as="footer" bg="gray.800" color="white" py={4} textAlign="center" mt={10} mr={5}>
+  <Text>&copy; Website 2024</Text>
+</Box>
 
     </>
   );
