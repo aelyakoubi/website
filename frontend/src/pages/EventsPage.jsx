@@ -25,6 +25,8 @@ import { OAuthButtonGroup } from "../FrontLogin/OAuthButtonGroup";
 import { PasswordField } from "../FrontLogin/PasswordField";
 import LogoutButton from "../components/LogoutButton";
 import LogoutTimer from "../components/LogoutTimer"; // Import the LogoutTimer component
+import Navbar from "../components/NavBar";
+
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -98,25 +100,8 @@ export const EventsPage = () => {
   
   return (
     <>
-<Box bg="gray.900" p={3} mr={5} >
-  <Flex as="nav" justify="space-between">
-    <HStack spacing={4}>
-      <Link as={RouterLink} to="/" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
-        Home
-      </Link>
-      <Link as={RouterLink} to="/About us" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
-        About us
-      </Link>
-      <Link as={RouterLink} to="/Contact" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
-        Contact
-      </Link>
-      <Link as={RouterLink} to="/Sign up" px={2} py={1} rounded="md" _hover={{ bg: "gray.700" }} color="white">
-        Sign up
-      </Link>
-    </HStack>
-  </Flex>
-</Box>
-
+  
+      <Navbar />
     
       <LogoutTimer /> {/* Add LogoutTimer component to track user inactivity */}
   
@@ -141,7 +126,7 @@ export const EventsPage = () => {
         {!userIsAuthenticated && (
           <Stack spacing="2">
             <Text color="gray.500" textAlign="center">
-              Don't have an account? <Link as={RouterLink} to="#">Sign up</Link>
+              Don't have an account? <Link as={RouterLink} to="/signup">Sign up</Link>
             </Text>
             <Box
               py={{ base: "0", sm: "8" }}
@@ -200,8 +185,10 @@ export const EventsPage = () => {
   spacing={4}
   flexDir="row"
   flexWrap="wrap"
-  justifyContent="space-around"
-  ml="auto"
+  justifyContent="space-between"
+  maxW="container.m" // Set a max width for the container
+  mx="auto"           // Center it by setting left and right margins to auto
+  px={4}              // Add some horizontal padding
   mt={50}
 >
   {Array.isArray(filteredEvents) && filteredEvents.length > 0 ? (
@@ -233,7 +220,7 @@ export const EventsPage = () => {
         _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
         onClick={() => handleEventClick(event.id)}
       >
-        <Box p="4" bg="rgba(255, 255, 255, 0.3)">
+        <Box p="1" bg="rgba(255, 255, 255, 0.3)">
           <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
             {event.title}
           </Heading>
@@ -242,17 +229,15 @@ export const EventsPage = () => {
           <Text>{new Date(event.endTime).toLocaleString()}</Text>
           <Text>{event.location}</Text>
           <Text>
-  {event.categoryIds && Array.isArray(event.categoryIds) && event.categoryIds.length > 0 ? (
-    event.categoryIds.map(id => {
-      const name = getCategoryName(id);
-      console.log(`ID: ${id}, Name: ${name}`); // Debugging log
-      return name;
-    }).join(', ')
-  ) : (
-    "No event categories are filled in."
-  )}
-</Text>
-
+            {event.categoryIds && Array.isArray(event.categoryIds) && event.categoryIds.length > 0 ? (
+              event.categoryIds.map(id => {
+                const name = getCategoryName(id);
+                return name;
+              }).join(', ')
+            ) : (
+              "No event categories are filled in."
+            )}
+          </Text>
         </Box>
       </Box>
     ))
@@ -260,11 +245,6 @@ export const EventsPage = () => {
     <Text>No events available.</Text>
   )}
 </Stack>
-
-<Box as="footer" bg="gray.800" color="white" py={4} textAlign="center" mt={10} mr={5}>
-  <Text>&copy; Website 2024</Text>
-</Box>
-
     </>
   );
-}  
+}

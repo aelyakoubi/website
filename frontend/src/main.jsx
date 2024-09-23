@@ -7,6 +7,11 @@ import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
 import { Root } from "./components/Root";
 import LogoutTimer from "./components/LogoutTimer"; // Ensure this path is correct
+import SignUpPage from './pages/SignUpPage'; // Import SignUpPage
+// You would also create the ContactPage and AboutUsPage
+import ContactPage from './pages/ContactPage';
+import AboutUsPage from './pages/AboutUsPage';
+
 
 const router = createBrowserRouter([
   {
@@ -16,6 +21,18 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <EventsPage />,
+      },
+      {
+        path: "/signup", // Adding the route for sign-up
+        element: <SignUpPage />, // Render SignUpPage component
+      },
+      {
+        path: "/contact",  // Contact route
+        element: <ContactPage />,
+      },
+      {
+        path: "/about",  // About us route
+        element: <AboutUsPage />,
       },
       {
         path: "/event/:eventId",

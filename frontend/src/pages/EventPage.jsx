@@ -10,34 +10,25 @@ export const EventPage = () => {
   const [event, setEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState({});
   const [eventUser, setEventUser] = useState(null);
-  const [categories, setCategories] = useState([]); // State to store categories
-  const token = localStorage.getItem("token"); // Get the token from local storage
+  const [categories, setCategories] = useState([]);
 
-  // Fetch event details and event creator
   useEffect(() => {
     fetch(`http://localhost:3000/events/${eventId}`)
       .then((response) => response.json())
       .then((data) => {
         setEvent(data);
         setEditedEvent(data);
-
-        fetch(`http://localhost:3000/users/${data.createdBy}`)
-          .then((response) => response.json())
-          .then((userData) => {
-            setEventUser(userData);
-          })
-          .catch((error) => console.log("Error fetching user data:", error));
+        return fetch(`http://localhost:3000/users/${data.createdBy}`);
       })
-      .catch((error) => console.log("Error fetching event data:", error));
+      .then((response) => response.json())
+      .then((userData) => setEventUser(userData))
+      .catch((error) => console.log("Error fetching data:", error));
   }, [eventId]);
 
-  // Fetch categories from backend
   useEffect(() => {
     fetch(`http://localhost:3000/categories`)
       .then((response) => response.json())
-      .then((data) => {
-        setCategories(data);
-      })
+      .then((data) => setCategories(data))
       .catch((error) => console.log("Error fetching categories:", error));
   }, []);
 
@@ -53,7 +44,6 @@ export const EventPage = () => {
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "PUT",
       headers: {
-        Authorization: token, // Include the token directly in the Authorization header
         "Content-Type": "application/json",
       },
       body: JSON.stringify(editedEvent),
@@ -74,7 +64,6 @@ export const EventPage = () => {
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
       headers: {
-        Authorization: token,
         "Content-Type": "application/json",
       },
     })
@@ -92,24 +81,27 @@ export const EventPage = () => {
       });
   };
 
-  const onDeleteConfirm = () => {
-    handleDeleteEvent();
-  };
-
   if (!event) {
     return <Box>Loading...</Box>;
   }
 
   return (
-    <>
-      <Flex direction="column" gap="1" maxW="350px" mx="auto" lineHeight="base" align={"center"} mt="-1">
-        <Box>
-          <Heading as="h1" mb={4}>
-            {event.title}
-          </Heading>
-          {event.image && <Image src={event.image} alt={event.title} mb={4} maxH="300px" />}
-
-          {/* Input field for editing the event title */}
+    <Flex direction="column" align="center" p={2} flexGrow={1}>
+      <Box maxW="400px" w="100%">
+        <Heading as="h1" fontSize="1.5em" mb={2}>
+          {event.title}
+        </Heading>
+        {event.image && (
+          <Image
+            src={event.image}
+            alt={event.title}
+            mb={2}
+            maxH="200px"
+            objectFit="cover"
+          />
+        )}
+        
+        <form>
           <label>
             Title:
             <Input
@@ -118,10 +110,11 @@ export const EventPage = () => {
               value={editedEvent.title || ""}
               onChange={handleInputChange}
               placeholder="Edit event title"
+              size="sm"
+              mb={1}
             />
           </label>
 
-          {/* Image URL input for editing the image */}
           <label>
             Image URL:
             <Input
@@ -130,10 +123,11 @@ export const EventPage = () => {
               value={editedEvent.image || ""}
               onChange={handleInputChange}
               placeholder="Paste image URL here"
+              size="sm"
+              mb={1}
             />
           </label>
 
-          {/* Input field for editing the event location with a max length of 30 */}
           <label>
             Location:
             <Input
@@ -141,8 +135,10 @@ export const EventPage = () => {
               name="location"
               value={editedEvent.location || ""}
               onChange={handleInputChange}
-              maxLength={30} // Limit input to 30 characters
+              maxLength={30}
               placeholder="Edit event location"
+              size="sm"
+              mb={1}
             />
             <Text color={editedEvent.location.length > 30 ? "red.500" : "gray.500"}>
               {editedEvent.location.length}/30 characters
@@ -150,81 +146,69 @@ export const EventPage = () => {
           </label>
 
           {eventUser && (
-            <Box>
-              <img src={eventUser.image} alt={eventUser.name} />
-              <Text>{eventUser.name}</Text>
+            <Box mb={2}>
+              <img src={eventUser.image} alt={eventUser.name} style={{ maxHeight: '50px', borderRadius: '50%' }} />
+              <Text fontSize="sm">{eventUser.name}</Text>
             </Box>
           )}
-          <Box>
-            <form>
-              <label>
-                Description:
-                <Input
-                  type="text"
-                  name="description"
-                  value={editedEvent.description || ""}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Start Time:
-                <Input
-                  type="text"
-                  name="startTime"
-                  value={editedEvent.startTime || ""}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                End Time:
-                <Input
-                  type="text"
-                  name="endTime"
-                  value={editedEvent.endTime || ""}
-                  onChange={handleInputChange}
-                />
-              </label>
-              <label>
-                Category:
-                <Select
-                  name="category"
-                  value={editedEvent.category || ""}
-                  onChange={handleInputChange}
-                >
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </Select>
-              </label>
-            </form>
-          </Box>
-          <Box
-            mt={4}
-            borderRadius="15px"
-            border="3px solid"
-            padding="0.6em 1.2em"
-            fontSize="1em"
-            fontWeight="extrabold"
-            fontFamily="inherit"
-            color={"black"}
-            cursor="pointer"
-            transition="border-color 0.25s, box-shadow 0.25s"
-            _hover={{
-              borderColor: "purple",
-              boxShadow: "0 0 8px 2px rgba(128, 78, 254, 0.5)",
-            }}
-            _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
-          >
-            <Button onClick={handleUpdateEvent} type="submit">
-              Edit Event
-            </Button>
-            <DeleteButton onDelete={onDeleteConfirm} />
-          </Box>
-        </Box>
-      </Flex>
+          
+          <label>
+            Description:
+            <Input
+              type="text"
+              name="description"
+              value={editedEvent.description || ""}
+              onChange={handleInputChange}
+              size="sm"
+              mb={1}
+            />
+          </label>
+          <label>
+            Start Time:
+            <Input
+              type="text"
+              name="startTime"
+              value={editedEvent.startTime || ""}
+              onChange={handleInputChange}
+              size="sm"
+              mb={1}
+            />
+          </label>
+          <label>
+            End Time:
+            <Input
+              type="text"
+              name="endTime"
+              value={editedEvent.endTime || ""}
+              onChange={handleInputChange}
+              size="sm"
+              mb={1}
+            />
+          </label>
+          <label>
+            Category:
+            <Select
+              name="category"
+              value={editedEvent.category || ""}
+              onChange={handleInputChange}
+              size="sm"
+              mb={2}
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </Select>
+          </label>
+        </form>
+
+        <Flex mt={2} justify="space-between">
+          <Button size="sm" onClick={handleUpdateEvent}>Edit Event</Button>
+          <DeleteButton onDelete={handleDeleteEvent} />
+        </Flex>
+      </Box>
       <LogoutButton />
-    </>
+    </Flex>
   );
 };

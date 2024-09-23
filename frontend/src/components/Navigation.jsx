@@ -45,7 +45,7 @@ export const Navigation = () => {
                 }}
                 _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
               >
-                <Link to="/"> Click for All Events </Link>
+                <Link to="/"> Home </Link>
               </Button>
             )}
           </Center>

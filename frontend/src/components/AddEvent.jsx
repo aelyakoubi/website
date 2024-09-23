@@ -52,8 +52,6 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
     }
   };
   
-  
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -81,13 +79,10 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
     console.log("Selected Category ID:", selectedCategoryId);
     console.log("New Event Object:", newEvent);
 
-    const token = localStorage.getItem("token");
-
     try {
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
         headers: {
-          Authorization: token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newEvent),
@@ -125,7 +120,8 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
         padding="0.6em 1.2em"
         fontSize="1.0em"
         color={"black"}
-        mt={5}
+        mt={0}
+        ml={5}
         w="150px"
         h="100px"
         fontWeight="650"
@@ -194,18 +190,17 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
                       </Text>
                       
                       <Select name="category" placeholder="Select Category" required>
-  {Array.isArray(categories) && categories.length > 0 ? (
-    categories.map((category) => (
-      <option key={category.id} value={category.id}>
-        {category.name}
-      </option>
-    ))
-  ) : (
-    <option disabled>No categories available</option>
-  )}
-</Select>
+                        {Array.isArray(categories) && categories.length > 0 ? (
+                          categories.map((category) => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))
+                        ) : (
+                          <option disabled>No categories available</option>
+                        )}
+                      </Select>
 
-                      <Input name="createdBy" placeholder="Created By" />
                       <Button type="submit" colorScheme="blue">
                         Add Event
                       </Button>
