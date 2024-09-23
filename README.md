@@ -25,10 +25,11 @@ The .env file is included for testing! and I was not strict on the usage of Came
 - AWS / S3
 - Mobile App Android and Ios.
 
-
-![Screenshot 2024-09-22 204938](https://github.com/user-attachments/assets/a467c108-8321-4965-af5d-528294be3237)
-![Screenshot 2024-09-22 210056](https://github.com/user-attachments/assets/da674bb0-43d4-4b00-9738-5ce52e12d67d)
-![Screenshot 2024-09-22 205000](https://github.com/user-attachments/assets/e36f15ef-35cb-47c9-ac55-35863a475fe5)
-![Screenshot 2024-09-22 205040](https://github.com/user-attachments/assets/56aa8cfb-0040-41b7-b720-6ae5a20e8084)
-![Screenshot 2024-09-22 205137](https://github.com/user-attachments/assets/2468ab87-6664-4fd0-9ef4-1ce3d8dae7b3)
-![Screenshot 2024-09-22 205111](https://github.com/user-attachments/assets/15568487-1f34-4bfc-83b9-cfe3353b50c2)
+![Screenshot 2024-09-23 212245ok5](https://github.com/user-attachments/assets/f6981450-1037-4a1b-8cc6-88a5ff741a86)
+![Screenshot 2024-09-23 211911OK](https://github.com/user-attachments/assets/9b3e9e69-b474-4888-b7df-55bf495da63c)
+![Screenshot 2024-09-23 212417ok6](https://github.com/user-attachments/assets/e713e85b-09d2-458c-86bd-d5490739c0ce)
+![Screenshot 2024-09-23 211949ok2](https://github.com/user-attachments/assets/55d6a419-4f0e-45ec-a911-376ec90a1161)
+![Screenshot 2024-09-23 212013ok3](https://github.com/user-attachments/assets/df649c5e-07e4-43a7-b070-576d76da180a)
+![Screenshot 2024-09-23 212103ok4](https://github.com/user-attachments/assets/31eee748-efff-4508-a3b2-bdfee5e72f58)
+![Screenshot 2024-09-22 205111](https://github.com/user-attachments/assets/3f083618-6d34-4d8a-a100-578505e2ca22)
+![Screenshot 2024-09-22 205137](https://github.com/user-attachments/assets/8fd1c129-a691-4f9d-807e-ac5c4c5213fb)
