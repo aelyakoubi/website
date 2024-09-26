@@ -15,6 +15,8 @@ The email adres and password is only for testing.
 - Admin panel so administrators can login and view and manage
 
 
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-email-password    // not yet implementend in .env file
 
 
 ``` For the next project 'online-shopping website' more features```
