@@ -3,13 +3,16 @@
 
 The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.
 
+The email adres and password is only for testing.
+
 - Sign up    page
 - Contact us page  + form <-> database / email
+- Contact form to database and email 
 - About us   page
 - Authorisation for users to be able only to edited their own events
 - cors    *       security upgrade / backend/src/index.js
 - 3e party login Google, Github and with 'X'
-- Admin panel so administrators can login and view and manage.
+- Admin panel so administrators can login and view and manage
 
 
 

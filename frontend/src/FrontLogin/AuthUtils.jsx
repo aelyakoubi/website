@@ -1,20 +1,18 @@
 // AuthUtils.js
 
-// Login function remains unchanged
+// Login function modified to accept either email or username as 'identifier'
 export const handleLogin = async (identifier, password, onClose) => {
   try {
-    console.log("Logging in with identifier:", identifier); // 'identifier' can be either username or email
-    console.log("Logging in with password:", password); 
+    console.log("Logging in with identifier:", identifier); // identifier can be either email or username
+    console.log("Logging in with password:", password);
 
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ identifier, password }), // Now login can use either username or email
+      body: JSON.stringify({ identifier, password }), // Passing either email or username as identifier
     });
-
-    console.log("Login response status:", response.status); 
 
     if (response.ok) {
       const { token } = await response.json(); // Assuming your server returns the token in the response
@@ -23,10 +21,10 @@ export const handleLogin = async (identifier, password, onClose) => {
         localStorage.setItem('token', token); // Store token in localStorage
         onClose(); // Close the modal after successful login
       } else {
-        throw new Error("Invalid username or password");
+        throw new Error("Invalid identifier or password");
       }
     } else {
-      throw new Error("Invalid username or password");
+      throw new Error("Invalid identifier or password");
     }
   } catch (error) {
     console.error("Login failed:", error);
@@ -34,23 +32,30 @@ export const handleLogin = async (identifier, password, onClose) => {
   }
 };
 
-// Sign-up function added
-export const handleSignUp = async (email, username, password) => {
+// Sign-up function now includes email, username, and password
+// AuthUtils.js
+
+export const handleSignUp = async (email, username, password, imageFile) => {
   try {
     console.log("Signing up with email:", email);
     console.log("Signing up with username:", username);
-    
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('username', username);
+    formData.append('password', password);
+    if (imageFile) {
+      formData.append('image', imageFile); // Attach the image file to the form data
+    }
+
     const response = await fetch("http://localhost:3000/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, username, password }), // Send email, username, and password to backend
+      body: formData, // Use FormData for file uploads
     });
 
     if (response.ok) {
       const data = await response.json();
-      console.log("Sign-up successful", data); // Display success message or redirect the user
+      console.log("Sign-up successful", data);
     } else {
       throw new Error("Sign-up failed");
     }
@@ -59,7 +64,8 @@ export const handleSignUp = async (email, username, password) => {
   }
 };
 
-// isAuthenticated remains unchanged
+
+// isAuthenticated function remains the same
 export const isAuthenticated = () => {
   const token = localStorage.getItem('token');
   return !!token;

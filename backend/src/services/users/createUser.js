@@ -1,19 +1,22 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
-const createUser = async (username, name, password, image) => {
-  const newUser = {
-    name,
-    username,
-    password,
-    image,
-  };
+const prisma = new PrismaClient();
 
-  const prisma = new PrismaClient();
-  const user = await prisma.user.create({
-    data: newUser,
+const createUser = async (email, username, password, image, name) => {
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = await prisma.user.create({
+    data: {
+      email,
+      username,
+      password: hashedPassword,
+      image, // Store image path in the database
+      name,   // Store name in the database
+    },
   });
 
-  return user;
+  return newUser;
 };
 
 export default createUser;
