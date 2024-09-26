@@ -21,26 +21,27 @@ model Event {
   id          String   @id @default(uuid())
   title       String
   description String
-  image       String   // URL of the image (e.g., S3 link)
+  image       String // Store the URL or file path of the image (e.g., local path or S3 link)
   location    String
   startTime   DateTime
   endTime     DateTime
   userId      String
 
-  createdBy   User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  categories   Category[] @relation("EventCategories")
+  createdBy  User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  categories Category[] @relation("EventCategories")
 
   @@index([userId])
 }
 
 model User {
-  id       String  @id @default(uuid())
-  email    String  @unique // Added email field with unique constraint
-  username String  @unique
-  password String
+  id       String @id @default(uuid())
   name     String
-  image    String   // URL of the user's profile image
-  events   Event[]
+  email    String @unique // Added email field with unique constraint
+  username String @unique
+  password String
+  image    String // Store the URL or file path of the user's profile image
+
+  events Event[]
 
   @@index([email]) // Optional: Index for email for faster lookups
 }

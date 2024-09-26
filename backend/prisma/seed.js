@@ -48,6 +48,16 @@ async function main() {
   for (const event of events) {
     if (event.categoryIds) {
       try {
+        // Check if createdBy user exists
+        const userExists = await prisma.user.findUnique({
+          where: { id: event.createdBy },
+        });
+
+        if (!userExists) {
+          console.error(`User with ID ${event.createdBy} does not exist. Skipping event ${event.title}.`);
+          continue; // Skip this event if the user doesn't exist
+        }
+
         await prisma.event.upsert({
           where: { id: event.id },
           update: {},
@@ -63,7 +73,7 @@ async function main() {
               connect: event.categoryIds.map((id) => ({ id })),
             },
             createdBy: {
-              connect: { id: event.createdBy },
+              connect: { id: event.createdBy }, // Connect to existing user
             },
           },
         });
