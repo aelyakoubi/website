@@ -63,6 +63,9 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
     // Log userId value
     console.log("User ID:", userId);
 
+    // Retrieve the token from localStorage
+    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+
     // Initialize newEvent object
     const newEvent = {
       title: form.title.value,
@@ -84,6 +87,7 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": token, // Include the token in the Authorization header
         },
         body: JSON.stringify(newEvent),
       });

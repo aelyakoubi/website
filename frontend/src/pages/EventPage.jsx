@@ -148,13 +148,13 @@ export const EventPage = () => {
               name="location"
               value={editedEvent.location || ""}
               onChange={handleInputChange}
-              maxLength={35}
+              maxLength={30}
               placeholder="Edit event location"
               size="sm"
               mb={1}
             />
-            <Text color={editedEvent.location.length > 35 ? "red.500" : "gray.500"}>
-              {editedEvent.location.length}/35 characters
+            <Text color={editedEvent.location.length > 30 ? "red.500" : "gray.500"}>
+              {editedEvent.location.length}/30 characters
             </Text>
           </label>
 

@@ -3,24 +3,35 @@
 import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization; // Expecting the token directly in the header
-  const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key'; // Use AUTH_SECRET_KEY for consistency
-  console.log("Secret Key in middleware:", secretKey);      // this line logs the secret key for debugging, but will be removed before production
+  let token = req.headers.authorization;
+  const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key';
+
+  console.log("Secret Key in middleware:", secretKey); // Debugging, should be removed in production
 
   if (!token) {
     return res.status(401).json({ message: 'You cannot access this operation without a token!' });
   }
 
-  // Verifying the token without Bearer prefix
+  // Check if token starts with "Bearer " and remove it if necessary
+  if (token.startsWith("Bearer ")) {
+    token = token.slice(7, token.length).trim();
+  }
+
+  // Verifying the token
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      console.log("Token verification failed:", err); // Logs the error for debugging
+      console.log("Token verification failed:", err);
       return res.status(403).json({ message: 'Invalid token provided!' });
     }
 
-    console.log("Decoded token:", decoded);  // Logs the decoded token for debugging
-    req.user = decoded;  // Attach user information to the request object
-    next(); // Proceed to the next middleware or route handler
+    // Use 'id' instead of 'userId' since the token contains 'id'
+    console.log("Decoded token:", decoded);
+    req.user = {
+      id: decoded.id,  // Ensure 'id' from the token is assigned
+      username: decoded.username,
+    };
+
+    next();
   });
 };
 

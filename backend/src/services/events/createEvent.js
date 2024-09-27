@@ -7,18 +7,18 @@ const createEvent = async (
   image,
   startTime,
   endTime,
-  createdBy,  // This should be the user ID
+  createdBy,  // This will be the 'id' from the token
   categoryIds
 ) => {
   const prisma = new PrismaClient();
-  
+
   if (!createdBy) {
     throw new Error("User ID (createdBy) is required to create an event.");
   }
 
-  // Log the received category IDs
+  // Log the received category IDs for debugging
   console.log("Category IDs received:", categoryIds);
-  
+
   try {
     const event = await prisma.event.create({
       data: {
@@ -26,14 +26,14 @@ const createEvent = async (
         description,
         location,
         image,
-        startTime: new Date(startTime),  // Convert to Date object
-        endTime: new Date(endTime),      // Convert to Date object
+        startTime: new Date(startTime),
+        endTime: new Date(endTime),
         createdBy: {
-          connect: { id: String(createdBy) },  // Ensure ID is a string
+          connect: { id: String(createdBy) },  // Use 'id' from the token
         },
         categories: {
           connect: Array.isArray(categoryIds)
-            ? categoryIds.map((id) => ({ id: String(id) })) // Ensure IDs are strings
+            ? categoryIds.map((id) => ({ id: String(id) }))
             : [],
         },
       },
@@ -44,7 +44,7 @@ const createEvent = async (
     console.error("Error creating event:", error);
     throw error;
   } finally {
-    await prisma.$disconnect(); // Always disconnect Prisma client
+    await prisma.$disconnect();
   }
 };
 
