@@ -41,30 +41,43 @@ export const EventPage = () => {
   };
 
   const handleUpdateEvent = () => {
+    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": token, // Include the token in the Authorization header
       },
       body: JSON.stringify(editedEvent),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to update event"); // Handle non-200 responses
+        }
+        return response.json();
+      })
       .then((data) => {
         setEvent(data);
         setEditedEvent(data);
         alert("Event updated successfully!");
+  
+        // Navigate to the main events page or the updated event page
+        navigate('/'); // Change this to the desired path after editing
       })
       .catch((error) => {
         console.log("Error updating event:", error);
         alert("Failed to update event!");
       });
   };
+  
+  
 
   const handleDeleteEvent = () => {
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": token, // Include the token in the Authorization header
       },
     })
       .then((response) => {

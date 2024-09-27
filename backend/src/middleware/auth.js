@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 const authMiddleware = (req, res, next) => {
   const token = req.headers.authorization; // Expecting the token directly in the header
   const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key'; // Use AUTH_SECRET_KEY for consistency
-  console.log("Secret Key in middleware:", secretKey);
+  console.log("Secret Key in middleware:", secretKey);      // this line logs the secret key for debugging, but will be removed before production
 
   if (!token) {
     return res.status(401).json({ message: 'You cannot access this operation without a token!' });

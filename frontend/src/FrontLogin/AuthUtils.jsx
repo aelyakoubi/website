@@ -1,4 +1,4 @@
-// AuthUtils.js
+// frontend/src/FrontLogin/AuthUtils.js
 
 // Login function modified to accept either email or username as 'identifier'
 export const handleLogin = async (identifier, password, onClose) => {
