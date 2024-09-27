@@ -6,8 +6,8 @@ The .env file is included for testing! and I was not strict on the usage of Came
 The email adres and password is only for testing.
 
 - Sign up    page + file upload
-- Contact us page  + form <-> database / email
-- Contact form info to database and email 
+- Contact us page  + form <-> database & email
+- Contact form info to database & email 
 - About us   page
 - Authorisation for users to be able only to edited their own events
 - cors    *       security upgrade / backend/src/index.js
