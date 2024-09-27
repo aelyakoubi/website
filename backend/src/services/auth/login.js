@@ -1,3 +1,4 @@
+// backend/src/services/auth/login.js
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -28,10 +29,13 @@ const login = async (identifier, password) => {
       throw new Error('Invalid credentials'); // Consistent error message for security reasons
     }
 
-    // Generate JWT token
-    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
+    // Generate JWT token using AUTH_SECRET_KEY from the environment
+    const token = jwt.sign({ id: user.id, username: user.username }, process.env.AUTH_SECRET_KEY, {
       expiresIn: '1h', // Token expiration time
     });
+    
+    // Log the secret key for debugging
+    console.log("Secret Key in login:", process.env.AUTH_SECRET_KEY);
 
     return token; // Return the token for further use
   } catch (error) {
@@ -44,3 +48,4 @@ const login = async (identifier, password) => {
 };
 
 export default login;
+
