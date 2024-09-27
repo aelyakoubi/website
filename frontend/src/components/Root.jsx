@@ -1,35 +1,22 @@
 import { Outlet } from "react-router-dom";
-import { Navigation } from "./Navigation";
 import { Footer } from "../components/Footer";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
-
+import { Box, Flex } from "@chakra-ui/react";
+import Navigation from "../components/Navigation";
 
 export const Root = () => {
   return (
-    <Box w="100vw" minH="100vh">
-      <Grid
-        templateAreas={`"header header"
-                        "main main"
-                        "footer footer"`}
-        gridTemplateRows={"auto 1fr auto"} // "1fr" ensures main section grows to fill available space
-        gridTemplateColumns={"1fr"}
-        h="100%"
-        gap={4}
-        color="blackAlpha.700"
-        fontWeight="bold"
-      >
-        <GridItem area={"header"}>
-          <Navigation />
-        </GridItem>
+    <Flex direction="column" w="100vw" minH="100vh">
+      <Box as="header">
+        <Navigation />
+      </Box>
 
-        <GridItem area={"main"} minH="70vh"> {/* Ensure minimum height for the main content */}
-          <Outlet />
-        </GridItem>
+      <Box as="main" flex="1" mt={4}> {/* Allow main content to grow */}
+        <Outlet />
+      </Box>
 
-        <GridItem area={"footer"} position="absolute" bottom="0"> {/* Sticky footer */}
-          <Footer />
-        </GridItem>
-      </Grid>
-    </Box>
+      <Box as="footer">
+        <Footer />
+      </Box>
+    </Flex>
   );
 };

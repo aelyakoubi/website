@@ -32,6 +32,7 @@ const SignUpPage = () => {
   };
 
   return (
+    <> 
     <Box maxW="md" mx="auto" mt={10}>
       <form onSubmit={handleSubmit}>
         <VStack spacing={4}>
@@ -89,6 +90,7 @@ const SignUpPage = () => {
         </VStack>
       </form>
     </Box>
+    </>
   );
 };
 

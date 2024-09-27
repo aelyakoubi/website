@@ -73,6 +73,7 @@ export const EventPage = () => {
   
 
   const handleDeleteEvent = () => {
+    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
     fetch(`http://localhost:3000/events/${eventId}`, {
       method: "DELETE",
       headers: {

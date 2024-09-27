@@ -25,8 +25,6 @@ import { OAuthButtonGroup } from "../FrontLogin/OAuthButtonGroup";
 import { PasswordField } from "../FrontLogin/PasswordField";
 import LogoutButton from "../components/LogoutButton";
 import LogoutTimer from "../components/LogoutTimer"; // Import the LogoutTimer component
-import Navbar from "../components/NavBar";
-
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -100,8 +98,6 @@ export const EventsPage = () => {
   
   return (
     <>
-  
-      <Navbar />
     
       <LogoutTimer /> {/* Add LogoutTimer component to track user inactivity */}
   
