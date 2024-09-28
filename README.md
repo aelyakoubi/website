@@ -36,7 +36,6 @@ EMAIL_PASS=your-email-password    // not yet implementend in .env file
 ![Screenshot 2024-09-27 210216](https://github.com/user-attachments/assets/c9d631eb-46d1-4921-bf03-5148fb14fce3)
 ![Screenshot 2024-09-27 210231](https://github.com/user-attachments/assets/7403b718-1b5d-46b9-9e09-a5799d6a81bb)
 ![Screenshot 2024-09-27 210926](https://github.com/user-attachments/assets/06c3d9eb-f17d-4d48-b41e-5e92ffcc86a2)
-![Screenshot 2024-09-27 210926](https://github.com/user-attachments/assets/f8959b4d-f4c5-4739-89ed-ba37c5742c2e)
 ![Screenshot 2024-09-27 211129](https://github.com/user-attachments/assets/9b2f7bab-23b2-4475-9632-992f9ab0d865)
 ![Screenshot 2024-09-27 211203](https://github.com/user-attachments/assets/a3f2e4f2-9264-473c-8cb8-0adedd6b68d3)
 ![Screenshot 2024-09-27 211221](https://github.com/user-attachments/assets/fe47a9d4-983b-4bdf-abad-6b0be9a38e82)

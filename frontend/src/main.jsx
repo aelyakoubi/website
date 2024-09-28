@@ -7,8 +7,7 @@ import { EventPage } from "./pages/EventPage";
 import { EventsPage } from "./pages/EventsPage";
 import { Root } from "./components/Root";
 import LogoutTimer from "./components/LogoutTimer"; // Ensure this path is correct
-import SignUpPage from './pages/SignUpPage'; // Import SignUpPage
-// You would also create the ContactPage and AboutUsPage
+import SignUpPage from './pages/SignUpPage'; 
 import ContactPage from './pages/ContactPage';
 import AboutUsPage from './pages/AboutUsPage';
 
