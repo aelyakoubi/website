@@ -1,7 +1,7 @@
 ```... Still under construction !!!```
 
 
-The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.
+The .env file is included for testing!
 
 The email adres and password is only for testing.
 
