@@ -32,9 +32,10 @@ router.get("/", async (req, res, next) => {
 
 // Signup route with validation
 router.post('/signup', upload.single('image'), userValidationRules(), async (req, res) => {
-  const errors = validationResult(req); // Check for validation errors
+  console.log('Received data:', req.body);  // Log the incoming data for debugging
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }); // Return errors if validation fails
+    return res.status(400).json({ errors: errors.array() });
   }
 
   const { name, email, username, password } = req.body;
@@ -48,6 +49,8 @@ router.post('/signup', upload.single('image'), userValidationRules(), async (req
     res.status(400).json({ error: error.message });
   }
 });
+
+
 
 // Get user by ID
 router.get("/:id", async (req, res, next) => {

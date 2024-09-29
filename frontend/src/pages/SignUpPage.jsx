@@ -27,8 +27,8 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, username, email, password, imageFile } = formData;
-    await handleSignUp(name, username, email, password, imageFile); // Pass the name to sign-up handler
+    const { name, email, username,  password, imageFile } = formData;
+    await handleSignUp(name, email, username,  password, imageFile); // Pass the name to sign-up handler
   };
 
   return (

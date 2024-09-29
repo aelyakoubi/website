@@ -32,15 +32,15 @@ export const handleLogin = async (identifier, password, onClose) => {
   }
 };
 
-// Sign-up function now includes email, username, and password
-// AuthUtils.js
-
-export const handleSignUp = async (email, username, password, imageFile) => {
+// Sign-up function now includes name, email, username, and password
+export const handleSignUp = async (name, email, username, password, imageFile) => {
   try {
+    console.log("Signing up with name:", name);
     console.log("Signing up with email:", email);
     console.log("Signing up with username:", username);
 
     const formData = new FormData();
+    formData.append('name', name); // Include the name field
     formData.append('email', email);
     formData.append('username', username);
     formData.append('password', password);
@@ -48,7 +48,7 @@ export const handleSignUp = async (email, username, password, imageFile) => {
       formData.append('image', imageFile); // Attach the image file to the form data
     }
 
-    const response = await fetch("http://localhost:3000/signup", {
+    const response = await fetch("http://localhost:3000/users/signup", {
       method: "POST",
       body: formData, // Use FormData for file uploads
     });
@@ -57,13 +57,13 @@ export const handleSignUp = async (email, username, password, imageFile) => {
       const data = await response.json();
       console.log("Sign-up successful", data);
     } else {
-      throw new Error("Sign-up failed");
+      const errorData = await response.json(); // Get error message from response
+      console.error("Sign-up failed:", errorData.errors || errorData);
     }
   } catch (error) {
     console.error("Sign-up error:", error);
   }
 };
-
 
 // isAuthenticated function remains the same
 export const isAuthenticated = () => {

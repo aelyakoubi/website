@@ -1,3 +1,5 @@
+// src/index.js or server.js
+
 import express from "express";
 import cors from "cors";
 import * as Sentry from "@sentry/node";
@@ -12,12 +14,17 @@ import errorHandler from "./middleware/errorHandler.js";
 import helmet from 'helmet'; // for security
 import path from 'path';
 
-const app = express();
+// Bypass SSL certificate validation (for development purposes only)
+if (process.env.NODE_ENV === 'development') {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
 
 // Initialize Prisma Client
 const prisma = new PrismaClient({
   log: ['query', 'info', 'warn', 'error']
 });
+
+const app = express();
 
 // Use Helmet middleware
 app.use(helmet());
@@ -31,7 +38,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Configure CORS with custom allowed headers
 const corsOptions = {
-  origin: '*', // Allow all origins (NEED to restrict this in production !!!!!)
+  origin: 'http://localhost:5173',  // Allow all origins (NEED to restrict this in production !!!!!)
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
   allowedHeaders: '*', // Allow all headers
   optionsSuccessStatus: 200, // Some legacy browsers choke on 204
