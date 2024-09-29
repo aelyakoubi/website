@@ -1,5 +1,10 @@
 // frontend/src/FrontLogin/AuthUtils.js
 
+import { useNavigate } from 'react-router-dom';
+
+const navigate = useNavigate();
+
+
 // Login function modified to accept either email or username as 'identifier'
 export const handleLogin = async (identifier, password, onClose) => {
   try {
@@ -33,7 +38,8 @@ export const handleLogin = async (identifier, password, onClose) => {
 };
 
 // Sign-up function now includes name, email, username, and password
-export const handleSignUp = async (name, email, username, password, imageFile) => {
+// Sign-up function now includes name, email, username, and password
+export const handleSignUp = async (name, email, username, password, imageFile, navigate) => {
   try {
     console.log("Signing up with name:", name);
     console.log("Signing up with email:", email);
@@ -56,6 +62,8 @@ export const handleSignUp = async (name, email, username, password, imageFile) =
     if (response.ok) {
       const data = await response.json();
       console.log("Sign-up successful", data);
+      // Redirect to the homepage after successful signup
+      navigate('/'); // Change this path if your homepage route is different
     } else {
       const errorData = await response.json(); // Get error message from response
       console.error("Sign-up failed:", errorData.errors || errorData);
@@ -64,6 +72,7 @@ export const handleSignUp = async (name, email, username, password, imageFile) =
     console.error("Sign-up error:", error);
   }
 };
+
 
 // isAuthenticated function remains the same
 export const isAuthenticated = () => {
