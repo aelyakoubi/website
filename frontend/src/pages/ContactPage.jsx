@@ -1,16 +1,76 @@
-// ContactPage.jsx
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Textarea, Heading } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Textarea, Heading, useToast } from '@chakra-ui/react';
 
 const ContactPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
+  const toast = useToast();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Contact Form Submitted:', { name, email, message });
-    // Here you would usually send the data to your backend
+
+    // Validation
+    if (!name || !email || !message) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fill in all fields.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: 'Invalid Email',
+        description: 'Please enter a valid email address.',
+        status: 'warning',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    setLoading(true); // Set loading state
+
+    try {
+      const response = await fetch('http://localhost:3000/contact', { 
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Message sent successfully!',
+          description: 'We will contact you soon.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        throw new Error('Failed to send message.');
+      }
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'There was an error sending your message. Please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false); // Reset loading state
+    }
   };
 
   return (
@@ -44,7 +104,9 @@ const ContactPage = () => {
             size="md"
           />
         </FormControl>
-        <Button type="submit" colorScheme="blue">Send Message</Button>
+        <Button type="submit" colorScheme="blue" isLoading={loading}>
+          Send Message
+        </Button>
       </form>
     </Box>
   );

@@ -6,7 +6,9 @@ const signUpUser = async (req, res) => {
 
   try {
     const newUser = await createUser(email, username, password);
-    await sendWelcomeEmail(newUser.email); // Send welcome email
+    
+    // Send welcome email to user and notification to admin
+    await sendWelcomeEmail(newUser.email, newUser.username);
 
     res.status(201).json(newUser);
   } catch (error) {

@@ -34,12 +34,12 @@ model Event {
 }
 
 model User {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  email    String @unique // Added email field with unique constraint
-  username String @unique
+  email    String  @unique // Added email field with unique constraint
+  username String  @unique
   password String
-  image    String // Store the URL or file path of the user's profile image
+  image    String? // Store the URL or file path of the user's profile image
 
   events Event[]
 

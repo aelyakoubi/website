@@ -157,7 +157,7 @@ export const EventsPage = () => {
                 </HStack>
                 <Stack spacing="6">
                   <Button onClick={() => handleLogin(username, password, closeModal)}>
-                    Sign in
+                    Log in
                   </Button>
                   <HStack>
                     <Divider />
