@@ -74,13 +74,14 @@ const ContactPage = () => {
   };
 
   return (
-    <Box p={5}>
+    <Box p={5} >
       <Heading mb={5}>Contact Us</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl mb={4} isRequired>
           <FormLabel>Name</FormLabel>
           <Input
             type="text"
+             fontWeight="bold"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your Name"
@@ -90,6 +91,7 @@ const ContactPage = () => {
           <FormLabel>Email</FormLabel>
           <Input
             type="email"
+             fontWeight="bold"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your Email"
@@ -99,6 +101,7 @@ const ContactPage = () => {
           <FormLabel>Message</FormLabel>
           <Textarea
             value={message}
+             fontWeight="bold"
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Your Message"
             size="md"

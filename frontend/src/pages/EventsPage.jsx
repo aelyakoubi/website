@@ -98,13 +98,12 @@ export const EventsPage = () => {
   return (
     <>
       <LogoutTimer /> {/* Add LogoutTimer component to track user inactivity */}
-      <Heading as="h1" textAlign="center" mt="13">Winc's Events</Heading>
+      <Heading as="h1" textAlign="center" mt="13" fontSize={30}>Winc's Events</Heading>
       <Container
         maxW="container.lg"
         position="relative"
         mt="4"
         zIndex="2"
-      // Use the updated variable for background image
         bgSize="cover"
         bgPosition="center"
         bgRepeat="no-repeat"
@@ -124,7 +123,7 @@ export const EventsPage = () => {
 
         {!userIsAuthenticated && (
           <Stack spacing="2">
-            <Text color="gray.500" textAlign="center">
+            <Text color="black.900" textAlign="center" fontSize={17}>
               Don't have an account? <Link as={RouterLink} to="/signup">Sign up</Link>
             </Text>
             <Box

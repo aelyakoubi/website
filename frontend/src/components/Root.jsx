@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Box, Flex } from "@chakra-ui/react";
 import Navigation from "../components/Navigation";
-import eventsBackgroundImage from "../components/eventsBackgroundImage.jpg";
+import eventsBackgroundImage from "../components/eventsBackgroundImage.png";
 
 export const Root = () => {
   return (
@@ -15,7 +15,7 @@ export const Root = () => {
         <Navigation />
       </Box>
 
-      <Box as="main" flex="1" mt={4} mb={8}> {/* Allow main content to grow */}
+      <Box as="main" flex="1" mt={4} mb={8} fontWeight={800}  fontStyle="bold"> {/* Allow main content to grow */}
         <Outlet />
       </Box>
 

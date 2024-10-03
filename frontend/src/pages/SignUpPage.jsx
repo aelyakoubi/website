@@ -65,6 +65,7 @@ const SignUpPage = () => {
             <Input
               type="text"
               name="name"
+               fontWeight="bold"
               value={formData.name}
               onChange={handleInputChange}
               required
@@ -75,6 +76,7 @@ const SignUpPage = () => {
             <Input
               type="email"
               name="email"
+               fontWeight="bold"
               value={formData.email}
               onChange={handleInputChange}
               required
@@ -85,6 +87,7 @@ const SignUpPage = () => {
             <Input
               type="text"
               name="username"
+               fontWeight="bold"
               value={formData.username}
               onChange={handleInputChange}
               required
@@ -95,6 +98,7 @@ const SignUpPage = () => {
             <Input
               type={showPassword ? 'text' : 'password'} // Toggle password visibility
               name="password"
+               fontWeight="bold"
               value={formData.password}
               onChange={handleInputChange}
               required
@@ -109,6 +113,7 @@ const SignUpPage = () => {
             <Input
               type="file"
               accept="image/*"
+               fontWeight="bold"
               onChange={handleImageChange}
             />
           </FormControl>

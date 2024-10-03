@@ -102,7 +102,7 @@ export const EventPage = () => {
   return (
     <Flex direction="column" align="center" p={2} flexGrow={1}>
       <Box maxW="400px" w="100%">
-        <Heading as="h1" fontSize="1.5em" mb={2}>
+        <Heading as="h1" fontSize="1.8em" mb={2}>
           {event.title}
         </Heading>
         {event.image && (
@@ -121,6 +121,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="title"
+              fontWeight="bold"
               value={editedEvent.title || ""}
               onChange={handleInputChange}
               placeholder="Edit event title"
@@ -134,6 +135,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="image"
+              fontWeight="bold"
               value={editedEvent.image || ""}
               onChange={handleInputChange}
               placeholder="Paste image URL here"
@@ -147,6 +149,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="location"
+              fontWeight="bold"
               value={editedEvent.location || ""}
               onChange={handleInputChange}
               maxLength={30}
@@ -154,14 +157,14 @@ export const EventPage = () => {
               size="sm"
               mb={1}
             />
-            <Text color={editedEvent.location.length > 30 ? "red.500" : "gray.500"}>
+            <Text color={editedEvent.location.length > 30 ? "red.500" : "gray.500"} fontWeight="bold">
               {editedEvent.location.length}/30 characters
             </Text>
           </label>
 
           {eventUser && (
             <Box mb={2}>
-              <img src={eventUser.image} alt={eventUser.name} style={{ maxHeight: '50px', borderRadius: '50%' }} />
+              <img src={eventUser.image} alt={eventUser.name} style={{ maxHeight: '50px', borderRadius: '50%' }}  fontWeight="bold"/>
               <Text fontSize="sm">{eventUser.name}</Text>
             </Box>
           )}
@@ -171,6 +174,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="description"
+              fontWeight="bold"
               value={editedEvent.description || ""}
               onChange={handleInputChange}
               size="sm"
@@ -182,6 +186,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="startTime"
+              fontWeight="bold"
               value={editedEvent.startTime || ""}
               onChange={handleInputChange}
               size="sm"
@@ -193,6 +198,7 @@ export const EventPage = () => {
             <Input
               type="text"
               name="endTime"
+              fontWeight="bold"
               value={editedEvent.endTime || ""}
               onChange={handleInputChange}
               size="sm"
@@ -203,6 +209,7 @@ export const EventPage = () => {
             Category:
             <Select
               name="category"
+              fontWeight="bold"
               value={editedEvent.category || ""}
               onChange={handleInputChange}
               size="sm"
