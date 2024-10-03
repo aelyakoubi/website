@@ -32,8 +32,8 @@ export const EventSearch = ({ events, setFilteredEvents }) => {
       width={["30%", "30%"]}
       pl = {50}
       ml={50}
-
       mt={10}
+     
       
     />
   );
