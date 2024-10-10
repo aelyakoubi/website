@@ -2,6 +2,8 @@
 
 ``` i still need to remove some files in the frontend/src, they are double```
 
+``` still need to fix the docker container ```
+
 
 The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.
 

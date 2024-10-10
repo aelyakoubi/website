@@ -6,7 +6,9 @@ const authMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
   const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key';
 
-  console.log("Secret Key in middleware:", secretKey); // Debugging, should be removed in production
+  // Debugging, should be removed in production
+//// console log auth secret key, removed for security reasons
+
 
   if (!token) {
     return res.status(401).json({ message: 'You cannot access this operation without a token!' });

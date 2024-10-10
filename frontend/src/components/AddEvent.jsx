@@ -33,7 +33,7 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/categories");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`); // Use environment variable for API URL
       const data = await response.json();
       console.log("Fetched categories data:", data);
   
@@ -83,7 +83,7 @@ export const AddEvent = ({ setFilteredEvents, events, userId }) => {
     console.log("New Event Object:", newEvent);
 
     try {
-      const response = await fetch("http://localhost:3000/events", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/events`, { // Use environment variable for API URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",

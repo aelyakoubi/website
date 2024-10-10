@@ -35,7 +35,7 @@ const login = async (identifier, password) => {
     });
     
     // Log the secret key for debugging
-    console.log("Secret Key in login:", process.env.AUTH_SECRET_KEY);
+   //// console log auth secret key, removed for security reasons
 
     return token; // Return the token for further use
   } catch (error) {

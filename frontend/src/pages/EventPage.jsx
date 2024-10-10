@@ -13,12 +13,12 @@ export const EventPage = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/events/${eventId}`)
+    fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`)
       .then((response) => response.json())
       .then((data) => {
         setEvent(data);
         setEditedEvent(data);
-        return fetch(`http://localhost:3000/users/${data.createdBy}`);
+        return fetch(`${import.meta.env.VITE_API_URL}/users/${data.createdBy}`);
       })
       .then((response) => response.json())
       .then((userData) => setEventUser(userData))
@@ -26,7 +26,7 @@ export const EventPage = () => {
   }, [eventId]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/categories`)
+    fetch(`${import.meta.env.VITE_API_URL}/categories`)
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.log("Error fetching categories:", error));
@@ -42,7 +42,7 @@ export const EventPage = () => {
 
   const handleUpdateEvent = () => {
     const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
-    fetch(`http://localhost:3000/events/${eventId}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const EventPage = () => {
         setEvent(data);
         setEditedEvent(data);
         alert("Event updated successfully!");
-  
+
         // Navigate to the main events page or the updated event page
         navigate('/'); // Change this to the desired path after editing
       })
@@ -69,12 +69,10 @@ export const EventPage = () => {
         alert("Failed to update event!");
       });
   };
-  
-  
 
   const handleDeleteEvent = () => {
     const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
-    fetch(`http://localhost:3000/events/${eventId}`, {
+    fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -164,7 +162,7 @@ export const EventPage = () => {
 
           {eventUser && (
             <Box mb={2}>
-              <img src={eventUser.image} alt={eventUser.name} style={{ maxHeight: '50px', borderRadius: '50%' }}  fontWeight="bold"/>
+              <img src={eventUser.image} alt={eventUser.name} style={{ maxHeight: '50px', borderRadius: '50%' }} fontWeight="bold" />
               <Text fontSize="sm">{eventUser.name}</Text>
             </Box>
           )}

@@ -26,7 +26,6 @@ import { PasswordField } from "../FrontLogin/PasswordField";
 import LogoutButton from "../components/LogoutButton";
 import LogoutTimer from "../components/LogoutTimer"; // Import the LogoutTimer component
 
-
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -37,7 +36,6 @@ export const EventsPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
- 
   useEffect(() => {
     fetchEvents();
     fetchCategories();
@@ -45,7 +43,7 @@ export const EventsPage = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch("http://localhost:3000/events");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/events`);
       const data = await response.json();
       if (Array.isArray(data)) {
         setEvents(data);
@@ -62,7 +60,7 @@ export const EventsPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/categories");
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
       const data = await response.json();
       setCategories(data);
       console.log("Fetched Categories:", data); // Add this line to debug

@@ -2,15 +2,16 @@
 
 import { useNavigate } from 'react-router-dom';
 
-
-
 // Login function modified to accept either email or username as 'identifier'
 export const handleLogin = async (identifier, password, onClose) => {
   try {
     console.log("Logging in with identifier:", identifier); // identifier can be either email or username
     console.log("Logging in with password:", password);
 
-    const response = await fetch("http://localhost:3000/login", {
+  
+
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +53,7 @@ export const handleSignUp = async (name, email, username, password, imageFile, n
       formData.append('image', imageFile);
     }
 
-    const response = await fetch("http://localhost:3000/users/signup", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users/signup`, {
       method: "POST",
       body: formData,
     });
@@ -69,8 +70,6 @@ export const handleSignUp = async (name, email, username, password, imageFile, n
     console.error("Sign-up error:", error);
   }
 };
-
-
 
 // isAuthenticated function remains the same
 export const isAuthenticated = () => {

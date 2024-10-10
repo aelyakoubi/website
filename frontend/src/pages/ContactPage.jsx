@@ -38,7 +38,7 @@ const ContactPage = () => {
     setLoading(true); // Set loading state
 
     try {
-      const response = await fetch('http://localhost:3000/contact', { 
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/contact`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,14 +74,14 @@ const ContactPage = () => {
   };
 
   return (
-    <Box p={5} >
+    <Box p={5}>
       <Heading mb={5}>Contact Us</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl mb={4} isRequired>
           <FormLabel>Name</FormLabel>
           <Input
             type="text"
-             fontWeight="bold"
+            fontWeight="bold"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your Name"
@@ -91,7 +91,7 @@ const ContactPage = () => {
           <FormLabel>Email</FormLabel>
           <Input
             type="email"
-             fontWeight="bold"
+            fontWeight="bold"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Your Email"
@@ -101,7 +101,7 @@ const ContactPage = () => {
           <FormLabel>Message</FormLabel>
           <Textarea
             value={message}
-             fontWeight="bold"
+            fontWeight="bold"
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Your Message"
             size="md"
