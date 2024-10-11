@@ -4,7 +4,7 @@
 You can clone the repo, install and run the app with the following commands:
 
 ````plaintext
-<<<<<<< HEAD
+
 
 (open the 1e terminal)
 npm install      
