@@ -1,8 +1,8 @@
 https://website-frontend-8wnm.onrender.com
 
-It could take up to 50 seconds before the website is online because of a free account!
+It may take up to 50 seconds for the website to be online due to a free account at Render!
 
-Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis account.
+Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis account!
 
 ```... Still under construction !!!```
 
