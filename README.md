@@ -35,17 +35,14 @@ EMAIL_PASS=your-email-password    // not yet implementend in .env file
 - AWS / S3
 - Mobile App Android and Ios.
 
+  
 
-
-![Screenshot 2024-09-27 210216](https://github.com/user-attachments/assets/c9d631eb-46d1-4921-bf03-5148fb14fce3)
-![Screenshot 2024-10-10 203209](https://github.com/user-attachments/assets/a1d917da-596d-464d-8ae3-204c424dd0f2)
-![Screenshot 2024-09-27 210926](https://github.com/user-attachments/assets/06c3d9eb-f17d-4d48-b41e-5e92ffcc86a2)
-![Screenshot 2024-10-10 203329](https://github.com/user-attachments/assets/a50bc600-564a-4db1-8f88-16246efad0b5)
-![Screenshot 2024-09-27 211203](https://github.com/user-attachments/assets/a3f2e4f2-9264-473c-8cb8-0adedd6b68d3)
-![Screenshot 2024-09-27 211221](https://github.com/user-attachments/assets/fe47a9d4-983b-4bdf-abad-6b0be9a38e82)
-![Screenshot 2024-09-27 211234](https://github.com/user-attachments/assets/9c11d69b-d576-4d48-b8f1-feb5128971b4)
-![Screenshot 2024-10-10 203306](https://github.com/user-attachments/assets/53531356-f8d3-49d8-ad01-e7fe4453af47)
-![Screenshot 2024-10-10 203244](https://github.com/user-attachments/assets/0ab8d36c-7a7f-488d-b318-bb3df1c3dcf1)
-![Screenshot 2024-10-10 203233](https://github.com/user-attachments/assets/b11f6ff4-fd50-4a4e-a61a-9e933b5a463d)
-![Screenshot 2024-09-22 205111](https://github.com/user-attachments/assets/db3b1e24-04f4-40c1-9195-ab334854cc2d)
-![Screenshot 2024-09-22 205137](https://github.com/user-attachments/assets/7f56d3cf-b3fa-49aa-83d2-7a2a56e305f9)
+![Screenshot 2024-10-11 142737](https://github.com/user-attachments/assets/92e87063-25ec-4a90-8eac-289aefc715af)
+![Screenshot 2024-10-10 203209](https://github.com/user-attachments/assets/5d0d346a-8674-4cbe-8a52-1a2a17cfdbf7)
+![Screenshot 2024-10-10 203329](https://github.com/user-attachments/assets/39f47830-ea77-4ced-ad81-dfe2d8b4158a)
+![Screenshot 2024-10-11 142435](https://github.com/user-attachments/assets/e024e403-b32f-4fa2-90d8-4fd7ea7696cb)
+![Screenshot 2024-10-11 142143](https://github.com/user-attachments/assets/ae3e63dd-7df3-4706-a2cd-8611deb42015)
+![Screenshot 2024-10-11 142038](https://github.com/user-attachments/assets/2b65b00a-fd78-4953-a0a3-b155d4c359ea)
+![Screenshot 2024-10-10 203233](https://github.com/user-attachments/assets/663e1e9d-b7c9-4f68-aaff-6d596a7c4f27)
+![Screenshot 2024-10-10 203244](https://github.com/user-attachments/assets/aa76a163-7ef4-4f0b-9dcc-e2e19b793220)
+![Screenshot 2024-10-10 203306](https://github.com/user-attachments/assets/019edd08-94b6-4a44-8e7f-4c513710a675)
