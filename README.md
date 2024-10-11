@@ -1,42 +1,32 @@
 ```... Still under construction !!!```
 
-``` i still need to remove some files in the frontend/src, they are double```
 
 ``` still need to finish the docker container ```
 
 
 The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.
 
-The email adres and password is only for testing.
-
-- Sign up    page + file upload
-- Contact us page  + form <-> database & email
-- Contact form info to database & email 
-- About us   page
-- Authorisation for users to be able only to edited their own events
-- cors    *       security upgrade / backend/src/index.js
-- 3e party login Google, Github and with 'X'
-- Admin panel so administrators can login and view and manage
 - The integration test still need to be modified for this project due many changes. 
 
 
 EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password    // not yet implementend in .env file
+EMAIL_PASS=your-email-password    // not yet implementend in the .env file. You can add your own for testing. 
 
 
-``` For the next project 'online-shopping website' more features```
+``` For now this project is done after the docker setup. An admin panel would be nice and more options etc. but because it was only for training and i will not needed.  My next project an 'online-shopping website' will have more features! ```
 
+- Redux
+- 3e party sign-in/ Third party
 - shopping cart 
 - Paypal or Stripe
-- hosting
 - cookies
 - SEO
 - SEA
 - AWS / S3
-- Mobile App Android and Ios.
+- Mobile App Android and Ios
+- hosting, maybe i will host the project for training
 
   
-
 ![Screenshot 2024-10-11 142737](https://github.com/user-attachments/assets/92e87063-25ec-4a90-8eac-289aefc715af)
 ![Screenshot 2024-10-10 203209](https://github.com/user-attachments/assets/5d0d346a-8674-4cbe-8a52-1a2a17cfdbf7)
 ![Screenshot 2024-10-10 203329](https://github.com/user-attachments/assets/39f47830-ea77-4ced-ad81-dfe2d8b4158a)
@@ -49,4 +39,3 @@ EMAIL_PASS=your-email-password    // not yet implementend in .env file
 ![Screenshot 2024-10-11 143335](https://github.com/user-attachments/assets/15e07885-28bd-471f-bf4f-8ba3d4940b97)
 ![Screenshot 2024-10-11 143404](https://github.com/user-attachments/assets/002ac242-83cd-4163-b53e-1772c8a89639)
 ![Screenshot 2024-10-11 143421](https://github.com/user-attachments/assets/1af49b0c-3064-4791-a0d6-60c481022ae0)
-
