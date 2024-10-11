@@ -1,4 +1,32 @@
 ```... Still under construction !!!```
+## How to get started
+
+You can clone the repo, install and run the app with the following commands:
+
+````plaintext
+<<<<<<< HEAD
+
+(open the 1e terminal)
+npm install      
+use / npm audit fix     (if needed)
+npm install
+npm run start    (for the frontend, will start on port: 5173)
+
+=======================================================================================
+
+(open the 2e terminal)
+npm install     
+use:  npm audit fix       (if needed)
+npm install
+npm run start    (for the backend, will start on port: 3000)
+
+=======================================================================================
+(open the 3e terminal, for the MySql database. So you will have 3 terminals open)
+npx prisma studio 
+
+=======================================================================================
+
+
 
 
 ``` still need to finish the docker container ```
