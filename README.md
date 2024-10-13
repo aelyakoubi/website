@@ -4,7 +4,7 @@ It may take up to 50 seconds for the website to be online due to a free account 
 
 Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis account!
 
-```... Still under construction !!!```
+```Starting up !!!```
 
 
 (open the 1e terminal)
@@ -23,18 +23,15 @@ npm run start    (for the backend, will start on port: 3000)
 (open the 3e terminal, for the MySql database. So you will have 3 terminals open)
 npx prisma studio 
 
-
-
-``` still need to finish the docker container ```
-
-
-The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.
-
-- The integration test still need to be modified for this project due many changes. 
+```The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.```
+``` The integration test still need to be modified for this project due many changes.```
 
 
 EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password    // not yet implementend in the .env file. You can add your own for testing. 
+EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website! 
+
+
+
 
 
 ``` For now this project is done after the docker setup. An admin panel would be nice and more options etc. but because it was only for training and i will not needed.  My next project an 'online-shopping website' will have more features! ```
