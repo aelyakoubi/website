@@ -23,12 +23,10 @@ npm run start    (for the backend, will start on port: 3000)
 (open the 3e terminal, for the MySql database. So you will have 3 terminals open)
 npx prisma studio 
 
-```The .env file is included for testing! and I was not strict on the usage of Camel case methode / naming files.```
+```The .env file is included for testing!```
 ``` The integration test still need to be modified for this project due many changes.```
-
-
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website! 
+```EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website!```
 
 
 
