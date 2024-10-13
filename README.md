@@ -25,8 +25,8 @@ npx prisma studio
 
 ```The .env file is included for testing!```
 ``` The integration test still need to be modified for this project due many changes.```
-```EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website!```
+```EMAIL_USER=your-email@gmail.com```
+```EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website!```
 
 
 
