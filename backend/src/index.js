@@ -4,8 +4,8 @@ import * as Sentry from "@sentry/node";
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import usersRouter from "./routes/users.js";
-import userAccountRouter from "./routes/useraccount.js";
-import signUpUserRouter from "./routes/signUpUser.js";
+import useraccountRouter from "./routes/useraccount.js";
+import signupRouter from "./routes/signup.js";
 import eventsRouter from "./routes/events.js";
 import categoriesRouter from "./routes/categories.js";
 import loginRouter from "./routes/login.js";
@@ -23,9 +23,8 @@ const prisma = new PrismaClient({
 
 const app = express();
 
-/// only for remove comment out for testing on render.com
-// Set 'trust proxy' to enable correct interpretation of X-Forwarded-For header
-// app.set('trust proxy', 1); // Trust first proxy (Render's reverse proxy)
+// Trust first proxy if needed (uncomment if applicable)
+app.set('trust proxy', 1);
 
 // Use Helmet middleware for security headers
 app.use(helmet());
@@ -37,11 +36,11 @@ const generalLimiter = rateLimit({
   message: { message: 'Too many requests from this IP, please try again later.' },
 });
 
-// Rate limiting applies specifically to login route.
+// Rate limiting for login route
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // Limit each IP to 5 login attempts per windowMs
-  message: { message: 'Too many login attempts, please try again later.' }, // Ensure this is an object for JSON response
+  message: { message: 'Too many login attempts, please try again later.' },
 });
 
 // Apply global rate limiter
@@ -75,21 +74,20 @@ Sentry.init({
 
 // API Routes
 app.use("/users", usersRouter);
-app.use("/useraccount", userAccountRouter);
-app.use("/signup", signUpUserRouter);
+app.use("/useraccount", useraccountRouter);
+app.use("/signup", signupRouter);
 app.use("/events", eventsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/login", loginLimiter, loginRouter); // Apply login limiter here
 app.use("/contact", contactFormRouter);
 
-// Need to comment out if it creates conflict on render.com // Serve static files from the Vite build directory
+// Serve static files from the Vite build directory
 app.use(express.static(path.join(process.cwd(), 'frontend', 'dist'))); // Adjust this path if needed
 
-// Need to comment out if it creates conflict on render.com // // Catch-all route to serve the index.html for React Router
+// Catch-all route to serve the index.html for React Router
 app.get('*', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'frontend', 'dist', 'index.html')); // Adjust this path if needed
 });
-
 
 // Error handling middleware (should be at the end)
 app.use(errorHandler);

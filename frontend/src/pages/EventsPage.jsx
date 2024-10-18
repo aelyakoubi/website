@@ -25,6 +25,8 @@ import { OAuthButtonGroup } from "../FrontLogin/OAuthButtonGroup";
 import { PasswordField } from "../FrontLogin/PasswordField";
 import LogoutButton from "../components/LogoutButton";
 import LogoutTimer from "../components/LogoutTimer"; // Import the LogoutTimer component
+import UserAccountPage from './UserAccountPage'; // Adjust the path as necessary
+import SignUpPage from "./SignUpPage"; // Import the SignUpPage component
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -170,6 +172,8 @@ export const EventsPage = () => {
 
       <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} userId={userId} />
       <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
+      <UserAccountPage/>
+    
 
       <Stack
         spacing={4}

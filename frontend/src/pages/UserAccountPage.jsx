@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const UserAccount = () => {
   const [userData, setUserData] = useState({
@@ -24,11 +23,13 @@ const UserAccount = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get('/api/useraccount');
-        setUserData(response.data);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`);
+        if (!response.ok) throw new Error('Failed to fetch user data');
+        const data = await response.json();
+        setUserData(data);
         setUpdatedUser({
-          username: response.data.username,
-          email: response.data.email,
+          username: data.username,
+          email: data.email,
         });
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -53,38 +54,54 @@ const UserAccount = () => {
     setSuccessMessage('');
 
     try {
-      const response = await axios.put('/api/useraccount', updatedUser);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedUser),
+      });
+
+      if (!response.ok) throw new Error('Failed to update user details');
       setSuccessMessage('User details updated successfully.');
       setUserData({ ...userData, ...updatedUser });
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || 'Failed to update user details.');
+      setErrorMessage(error.message);
     }
   };
 
   // Handle deleting the account
   const handleDeleteAccount = async () => {
     try {
-      await axios.delete('/api/useraccount');
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete account');
       setSuccessMessage('Account deleted. Redirecting to homepage...');
       setTimeout(() => {
         navigate('/'); // Redirect to homepage after deleting account
       }, 2000);
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || 'Failed to delete account.');
+      setErrorMessage(error.message);
     }
   };
 
   // Handle deleting an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      await axios.delete(`/api/useraccount/events/${eventId}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount/events/${eventId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) throw new Error('Failed to delete event');
       setUserData({
         ...userData,
         events: userData.events.filter((event) => event.id !== eventId),
       });
       setSuccessMessage('Event deleted successfully.');
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || 'Failed to delete event.');
+      setErrorMessage(error.message);
     }
   };
 

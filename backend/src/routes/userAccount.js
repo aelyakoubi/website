@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { body, validationResult } from "express-validator";
-import User from "../models/User.js";  // Assuming you have a User model
-import Event from "../models/Event.js"; // Assuming you have an Event model
-import authMiddleware from "../middleware/auth.js"; // Ensure user is authenticated
+import User from "../routes/users.js";  // Assuming you have a User model
+import Event from "../routes/events.js"; // Assuming you have an Event model
+import auth from "../middleware/auth.js"; // Ensure user is authenticated
 
 const router = Router();
 
 // Get user account details including events
-router.get('/useraccount', authMiddleware, async (req, res) => {
+router.get('/useraccount', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id); // req.user.id is available from the auth middleware
     const events = await Event.find({ createdBy: req.user.id });
@@ -24,7 +24,7 @@ router.get('/useraccount', authMiddleware, async (req, res) => {
 router.put('/useraccount', [
   body('username').notEmpty().withMessage('Username is required'),
   body('email').isEmail().withMessage('Invalid email format')
-], authMiddleware, async (req, res) => {
+], auth, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -43,7 +43,7 @@ router.put('/useraccount', [
 });
 
 // Delete user account
-router.delete('/useraccount', authMiddleware, async (req, res) => {
+router.delete('/useraccount', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: 'User not found' });
@@ -60,7 +60,7 @@ router.delete('/useraccount', authMiddleware, async (req, res) => {
 });
 
 // Delete specific event created by the user
-router.delete('/useraccount/events/:eventId', authMiddleware, async (req, res) => {
+router.delete('/useraccount/events/:eventId', auth, async (req, res) => {
   try {
     const event = await Event.findOne({ _id: req.params.eventId, createdBy: req.user.id });
     if (!event) return res.status(404).json({ message: 'Event not found or you are not authorized' });
