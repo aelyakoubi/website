@@ -14,6 +14,8 @@ router.get("/", async (req, res, next) => {
     const users = await getUsers();
     res.json(users);
   } catch (error) {
+
+    
     next(error);
   }
 });
@@ -66,19 +68,11 @@ router.delete("/:id", auth, async (req, res, next) => {
   }
 });
 
-// Update user by ID with validation
-router.put("/:id", auth, userValidationRules(), async (req, res, next) => {
-  const errors = validationResult(req); // Check for validation errors
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }); // Return errors if validation fails
-  }
-
+router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, password, username, image } = req.body;
-    const updatedData = { name, password, username, image };
-
-    const user = await updateUserById(id, updatedData);
+    const user = await updateUserById(id, { name, password, username, image });
 
     if (user) {
       res.status(200).send({
