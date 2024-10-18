@@ -1,8 +1,6 @@
+Backend/.env  If you download the project please add values for email.
 
-still fix the users.js in route,    sendwelcomemail and signupusers.js   because the changes i made not going to database, also check seed.js of pak alles van de pc van ilias....... bureaublad website main 
-
-
-
+On the website everything is working. See the link below.
 
 https://website-frontend-8wnm.onrender.com
 
