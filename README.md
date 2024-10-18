@@ -1,3 +1,9 @@
+
+still fix the users.js in route,    sendwelcomemail and signupusers.js   because the changes i made not going to database, also check seed.js of pak alles van de pc van ilias....... bureaublad website main 
+
+
+
+
 https://website-frontend-8wnm.onrender.com
 
 It may take up to 50 seconds for the website to be online due to a free account at Render!
@@ -23,13 +29,7 @@ npm run start    (for the backend, will start on port: 3000)
 (open the 3e terminal, for the MySql database. So you will have 3 terminals open)
 npx prisma studio 
 
-```The .env file is included for testing!```
-``` The integration test still need to be modified for this project due many changes.```
-```EMAIL_USER=your-email@gmail.com```
-```EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website!```
-
-
-
+``` There are some console logs still need to be removed for security reasons```
 
 
 ``` For now this project is done after the docker setup. An admin panel would be nice and more options etc. but because it was only for training and i will not needed.  My next project an 'online-shopping website' will have more features! ```
