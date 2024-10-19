@@ -1,11 +1,10 @@
-// frontend/src/pages/EventsPage.jsx
-
 import React, { useState, useEffect } from "react";
 import {
   Heading,
   Flex,
   Container,
   useDisclosure,
+  Button, // Import Button for direct login
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { AddEvent } from "../components/AddEvent";
@@ -15,7 +14,7 @@ import { Logo } from "../FrontLogin/Logo";
 import LogoutButton from "../components/LogoutButton";
 import LogoutTimer from "../components/LogoutTimer";
 import { LoginModal } from "../components/LoginModal"; // Import LoginModal
-import {EventList} from "../components/EventList"; // Import EventList
+import { EventList } from "../components/EventList"; // Import EventList
 
 export const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -64,7 +63,7 @@ export const EventsPage = () => {
     if (userIsAuthenticated) {
       navigate(`/event/${eventId}`);
     } else {
-      alert("Please log in or sign up to view event details.");
+      onOpen(); // Open the login modal if not authenticated
     }
   };
 
@@ -101,15 +100,20 @@ export const EventsPage = () => {
           {userIsAuthenticated && <LogoutButton />}
         </Flex>
 
+        {/* Render the LoginModal conditionally based on isOpen */}
+        <LoginModal isOpen={isOpen} onClose={onClose} />
+
+        {/* Button to open the login modal directly */}
         {!userIsAuthenticated && (
-          <LoginModal closeModal={onClose} /> // Use the LoginModal component
+          <Button onClick={onOpen} mt={4} colorScheme="teal">
+            Log in
+          </Button>
         )}
       </Container>
 
       <AddEvent setFilteredEvents={setFilteredEvents} events={events} categoryIds={[]} userId={userId} />
       <EventSearch events={events} setFilteredEvents={setFilteredEvents} />
       
-
       {/* Event List */}
       <EventList
         filteredEvents={filteredEvents}

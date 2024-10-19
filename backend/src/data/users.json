@@ -15,6 +15,14 @@
       "password": "Wimpie1234",
       "name": "Wimpie Blok",
       "image": "https://global-uploads.webflow.com/5eecfecbe625d195e35b89f2/624bfb401d7131c760ca1c63_Elieska%20Lensink.jpg"
-    }
+      },
+      {
+        "id": "7d9a5c54-42c1-4636-89a3-cd1c69e5bb88",
+        "username": "AhmedE",
+        "email": "a.elyakoubi2014@gmail.com",
+        "password": "Ahmed_2622",
+        "name": "Ahmed El Yakoubi",
+        "image": "https://global-uploads.webflow.com/5eecfecbe625d195e35b89f2/624bfb401d7131c760ca1c63_Elieska%20Lensink.jpg"
+      }
   ]
 }
