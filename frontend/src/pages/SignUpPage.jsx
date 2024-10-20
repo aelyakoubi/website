@@ -32,27 +32,28 @@ const SignUpPage = () => {
       imageFile: e.target.files[0],
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage(''); // Reset error message
     setSuccessMessage(''); // Reset success message
   
-    const { name, email, username, password, imageFile } = formData;
+    const { name, email, username, password, image } = formData; // Use 'image' here
   
     try {
-      await handleSignUp(name, email, username, password, imageFile);
+      await handleSignUp(name, email, username, password, image); // Pass 'image'
       setSuccessMessage('Sign-up successful! Redirecting...');
   
-      // Redirect to homepage after successful sign-up
       setTimeout(() => {
         navigate('/'); // Redirect to the homepage after 2 seconds
       }, 2000);
       
     } catch (error) {
-      // Display specific error messages from the backend
+      console.error("Sign-up error:", error); // Log the error for debugging
       setErrorMessage(error.response?.data?.message || 'Sign-up failed. Please try again.');
     }
   };
+  
   
 
   return (

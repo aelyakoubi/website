@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Table, Thead, Tbody, Tr, Th, Td, Flex, Heading } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 const UserAccount = () => {
@@ -23,7 +23,7 @@ const UserAccount = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`);
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users`); // Update endpoint here
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
         setUserData(data);
@@ -54,7 +54,7 @@ const UserAccount = () => {
     setSuccessMessage('');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, { // Update endpoint here
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const UserAccount = () => {
   // Handle deleting the account
   const handleDeleteAccount = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, { // Update endpoint here
         method: 'DELETE',
       });
 
@@ -90,7 +90,7 @@ const UserAccount = () => {
   // Handle deleting an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/useraccount/events/${eventId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/events/${eventId}`, { // Update endpoint here
         method: 'DELETE',
       });
 
@@ -106,12 +106,16 @@ const UserAccount = () => {
   };
 
   return (
-    <Box maxW="md" mx="auto" mt={10}>
-      {errorMessage && <Text color="red.500">{errorMessage}</Text>}
-      {successMessage && <Text color="green.500">{successMessage}</Text>}
+    <Flex direction="column" align="center" p={2} flexGrow={1}>
+      <Box maxW="400px" w="100%">
+        <Heading as="h1" fontSize="1.8em" mb={2}>
+          <Text fontSize="2xl" mb={5}>Account Details</Text> 
+        </Heading>
+        {errorMessage && <Text color="red.500">{errorMessage}</Text>}
+        {successMessage && <Text color="green.500">{successMessage}</Text>}
+      </Box>
 
-      {/* User Account Details */}
-      <Text fontSize="2xl" mb={5}>Account Details</Text>
+      {/* User Account Details */}  
       <VStack spacing={4}>
         <FormControl id="username">
           <FormLabel>Username</FormLabel>
@@ -163,8 +167,8 @@ const UserAccount = () => {
       <Button colorScheme="red" mt={10} onClick={handleDeleteAccount}>
         Delete Account
       </Button>
-    </Box>
+    </Flex>
   );
-};
+}
 
 export default UserAccount;

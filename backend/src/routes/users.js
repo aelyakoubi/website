@@ -5,7 +5,9 @@ import createUser from "../services/users/createUser.js";
 import getUserById from "../services/users/getUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
 import updateUserById from "../services/users/updateUserById.js";
+import sendWelcomeEmail from "../services/email/sendWelcomeEmail.js"; // Importing sendWelcomeEmail
 import auth from "../middleware/auth.js";
+
 
 const router = Router();
 
@@ -16,9 +18,33 @@ const userValidationRules = () => {
     body('email').isEmail().withMessage('Invalid email format'),
     body('username').notEmpty().withMessage('Username is required'),
     body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
-    // Add more validation rules as needed
   ];
 };
+
+// Signup route
+router.post('/signup', userValidationRules(), async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { name, email, username, password } = req.body;
+
+  try {
+    const newUser = await createUser(name, email, username, password);
+    await sendWelcomeEmail(newUser.email, newUser.username); // Use username here
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    if (error.message.includes('Email already exists')) {
+      return res.status(409).json({ message: 'This email is already registered.' });
+    } else if (error.message.includes('Username already exists')) {
+      return res.status(409).json({ message: 'This username is already taken.' });
+    } else {
+      return res.status(400).json({ message: 'An error occurred during signup.' });
+    }
+  }
+});
 
 // Get all users
 router.get("/", async (req, res, next) => {
@@ -37,12 +63,19 @@ router.post("/", userValidationRules(), async (req, res, next) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
+  const { name, email, username, password } = req.body;
+
   try {
-    const { name, email, password, username, image } = req.body;
-    const newUser = await createUser(name, email, password, username, image);
+    const newUser = await createUser(name, email, username, password);
     res.status(201).json(newUser);
   } catch (error) {
-    next(error);
+    if (error.message.includes('Email already exists')) {
+      return res.status(409).json({ message: 'This email is already registered.' });
+    } else if (error.message.includes('Username already exists')) {
+      return res.status(409).json({ message: 'This username is already taken.' });
+    } else {
+      return res.status(400).json({ message: 'An error occurred during user creation.' });
+    }
   }
 });
 
@@ -99,6 +132,41 @@ router.put("/:id", auth, userValidationRules(), async (req, res, next) => {
     } else {
       res.status(404).json({ message: `User with id ${id} not found` });
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Update user account details (username, email)
+router.put("/useraccount", auth, userValidationRules(), async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const { username, email } = req.body;
+
+  try {
+    const user = await prisma.user.update({
+      where: { id: req.user.id },
+      data: { username, email },
+    });
+
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ message: 'Account updated successfully', user });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Delete user account and associated events
+router.delete("/useraccount", auth, async (req, res, next) => {
+  try {
+    await prisma.event.deleteMany({ where: { createdBy: req.user.id } }); // Delete all events created by the user
+    await prisma.user.delete({ where: { id: req.user.id } }); // Delete the user account
+
+    res.json({ message: 'Account and associated events deleted successfully' });
   } catch (error) {
     next(error);
   }

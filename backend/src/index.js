@@ -4,8 +4,6 @@ import * as Sentry from "@sentry/node";
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
 import usersRouter from "./routes/users.js";
-import useraccountRouter from "./routes/useraccount.js";
-import signupRouter from "./routes/signup.js";
 import eventsRouter from "./routes/events.js";
 import categoriesRouter from "./routes/categories.js";
 import loginRouter from "./routes/login.js";
@@ -32,14 +30,14 @@ app.use(helmet());
 // Rate limiting applies globally to all routes
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  max: 1000, // Limit each IP to 100 requests per windowMs                       ///// stil need to change this to 100 times  !!!!!
   message: { message: 'Too many requests from this IP, please try again later.' },
 });
 
 // Rate limiting for login route
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // Limit each IP to 5 login attempts per windowMs
+  max:100 , // Limit each IP to 5 login attempts per windowMs                   ///// stil need to change this to 5 times  !!!!!
   message: { message: 'Too many login attempts, please try again later.' },
 });
 
@@ -49,9 +47,6 @@ app.use(generalLimiter);
 // Global middleware
 app.use(express.json());
 app.use(log);
-
-// Serve static files from the uploads directory
-app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Configure CORS with custom allowed headers
 const corsOptions = {
@@ -74,12 +69,13 @@ Sentry.init({
 
 // API Routes
 app.use("/users", usersRouter);
-app.use("/useraccount", useraccountRouter);
-app.use("/signup", signupRouter);
 app.use("/events", eventsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/login", loginLimiter, loginRouter); // Apply login limiter here
 app.use("/contact", contactFormRouter);
+
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Serve static files from the Vite build directory
 app.use(express.static(path.join(process.cwd(), 'frontend', 'dist'))); // Adjust this path if needed

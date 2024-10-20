@@ -3,7 +3,6 @@ import { Box, Heading, Input, Flex, Button, Text, Image, Select } from "@chakra-
 import { useParams, useNavigate } from "react-router-dom";
 import { DeleteButton } from "../components/DeleteButton";
 import LogoutButton from "../components/LogoutButton";
-import UserAccountPage from './UserAccountPage';
 
 export const EventPage = () => {
   const { eventId } = useParams();
@@ -99,7 +98,6 @@ export const EventPage = () => {
   }
 
   return (
-    <>  <UserAccountPage /> 
     <Flex direction="column" align="center" p={2} flexGrow={1}>
       <Box maxW="400px" w="100%">
         <Heading as="h1" fontSize="1.8em" mb={2}>
@@ -231,6 +229,5 @@ export const EventPage = () => {
       </Box>
       <LogoutButton />
     </Flex>
-    </>
   );
 };

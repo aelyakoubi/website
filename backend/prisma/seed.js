@@ -1,14 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt"; // Import bcrypt for hashing passwords
 import eventsData from "../src/data/events.json" assert { type: "json" };
-import userData from "../src/data/users.json" assert { type: "json" };
+import usersData from "../src/data/users.json" assert { type: "json" };
 import categoryData from "../src/data/categories.json" assert { type: "json" };
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
 
 async function main() {
   const { events } = eventsData;
-  const { users } = userData;
+  const { users } = usersData;
   const { categories } = categoryData;
 
   // Upsert categories
@@ -28,9 +28,9 @@ async function main() {
       await prisma.user.upsert({
         where: { id: user.id }, // Ensure user JSON has id
         update: {
-          name: user.name, // Update name if exists
-          username: user.username, // Update username if exists
-          email: user.email, // Update email if exists
+          name: user.name || "",
+          username: user.username || "", 
+          email: user.email || "",
           password: hashedPassword || undefined, // Update password only if provided (hashed)
           image: user.image || null, // Set image if provided, otherwise null
         },
