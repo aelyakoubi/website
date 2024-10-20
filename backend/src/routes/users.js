@@ -7,6 +7,20 @@ import deleteUserById from "../services/users/deleteUserById.js";
 import updateUserById from "../services/users/updateUserById.js";
 import sendWelcomeEmail from "../services/email/sendWelcomeEmail.js"; // Importing sendWelcomeEmail
 import auth from "../middleware/auth.js";
+import multer from "multer";
+
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Specify your upload directory
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // Rename the file to avoid conflicts
+  },
+});
+
+const upload = multer({ storage });
 
 
 const router = Router();
@@ -21,28 +35,27 @@ const userValidationRules = () => {
   ];
 };
 
-// Signup route
-router.post('/signup', userValidationRules(), async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
+// Signup route with multer middleware
+router.post('/signup', upload.single('image'), async (req, res) => {
   const { name, email, username, password } = req.body;
+  const imagePath = req.file ? req.file.path : null; // Get the path of the uploaded file
 
   try {
-    const newUser = await createUser(name, email, username, password);
-    await sendWelcomeEmail(newUser.email, newUser.username); // Use username here
+    const user = await createUser({
+      name,
+      email,
+      username,
+      password,
+      image: imagePath, // Save the image path as a string
+    });
 
-    res.status(201).json(newUser);
+    // Send welcome email or any additional logic
+    // await sendWelcomeEmail(user);
+    
+    res.status(200).json({ message: 'User created successfully', user });
   } catch (error) {
-    if (error.message.includes('Email already exists')) {
-      return res.status(409).json({ message: 'This email is already registered.' });
-    } else if (error.message.includes('Username already exists')) {
-      return res.status(409).json({ message: 'This username is already taken.' });
-    } else {
-      return res.status(400).json({ message: 'An error occurred during signup.' });
-    }
+    console.error("User creation error:", error);
+    res.status(400).json({ message: error.message });
   }
 });
 

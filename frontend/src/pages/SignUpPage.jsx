@@ -6,7 +6,7 @@ import { handleSignUp } from '../FrontLogin/AuthUtils'; // Ensure the path to Au
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
-    name: '', 
+    name: '',
     username: '',
     email: '',
     password: '',
@@ -37,24 +37,21 @@ const SignUpPage = () => {
     e.preventDefault();
     setErrorMessage(''); // Reset error message
     setSuccessMessage(''); // Reset success message
-  
-    const { name, email, username, password, image } = formData; // Use 'image' here
-  
+
+    const { name, email, username, password, imageFile } = formData; // Correctly use 'imageFile' here
+
     try {
-      await handleSignUp(name, email, username, password, image); // Pass 'image'
+      await handleSignUp(name, email, username, password, imageFile); // Pass 'imageFile'
       setSuccessMessage('Sign-up successful! Redirecting...');
-  
+
       setTimeout(() => {
         navigate('/'); // Redirect to the homepage after 2 seconds
       }, 2000);
-      
     } catch (error) {
       console.error("Sign-up error:", error); // Log the error for debugging
       setErrorMessage(error.response?.data?.message || 'Sign-up failed. Please try again.');
     }
   };
-  
-  
 
   return (
     <Box maxW="md" mx="auto" mt={10}>
@@ -67,7 +64,7 @@ const SignUpPage = () => {
             <Input
               type="text"
               name="name"
-               fontWeight="bold"
+              fontWeight="bold"
               value={formData.name}
               onChange={handleInputChange}
               required
@@ -78,7 +75,7 @@ const SignUpPage = () => {
             <Input
               type="email"
               name="email"
-               fontWeight="bold"
+              fontWeight="bold"
               value={formData.email}
               onChange={handleInputChange}
               required
@@ -89,7 +86,7 @@ const SignUpPage = () => {
             <Input
               type="text"
               name="username"
-               fontWeight="bold"
+              fontWeight="bold"
               value={formData.username}
               onChange={handleInputChange}
               required
@@ -100,12 +97,18 @@ const SignUpPage = () => {
             <Input
               type={showPassword ? 'text' : 'password'} // Toggle password visibility
               name="password"
-               fontWeight="bold"
+              fontWeight="bold"
               value={formData.password}
               onChange={handleInputChange}
               required
             />
-            <Button onClick={() => setShowPassword(!showPassword)} variant="link">
+            <Button 
+              type="button" // Prevents form submission
+              onClick={() => setShowPassword(!showPassword)} 
+              variant="link"
+              color="blue.500" // Adjust color for visibility
+              fontSize="sm" // Smaller font size for the button
+            >
               {showPassword ? <ViewOffIcon /> : <ViewIcon />}
               {showPassword ? 'Hide password' : 'Show password'}
             </Button>
@@ -115,7 +118,7 @@ const SignUpPage = () => {
             <Input
               type="file"
               accept="image/*"
-               fontWeight="bold"
+              fontWeight="bold"
               onChange={handleImageChange}
             />
           </FormControl>

@@ -1,14 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt"; // Import bcrypt for hashing passwords
 import eventsData from "../src/data/events.json" assert { type: "json" };
-import usersData from "../src/data/users.json" assert { type: "json" };
+import userData from "../src/data/users.json" assert { type: "json" };
 import categoryData from "../src/data/categories.json" assert { type: "json" };
 
 const prisma = new PrismaClient({ log: ["query", "info", "warn", "error"] });
 
 async function main() {
   const { events } = eventsData;
-  const { users } = usersData;
+  const { users } = userData;
   const { categories } = categoryData;
 
   // Upsert categories
