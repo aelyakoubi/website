@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
-const createUser = async (name, email, username, password, image = null) => {
+const createUser = async ({ name, email, username, password, image = null }) => {
   try {
     // Log the user data for debugging
     console.log({ name, email, username, password, image });
@@ -52,6 +52,8 @@ const createUser = async (name, email, username, password, image = null) => {
     // Log the error for debugging purposes
     console.error("User creation error:", error.message);
     throw error; // Rethrow to handle in the route
+  } finally {
+    await prisma.$disconnect(); // Ensure Prisma Client disconnects after operation
   }
 };
 

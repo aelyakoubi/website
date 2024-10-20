@@ -37,10 +37,11 @@ const userValidationRules = () => {
 
 // Signup route with multer middleware
 router.post('/signup', upload.single('image'), async (req, res) => {
+  // Destructure fields from req.body
   const { name, email, username, password } = req.body; // Ensure you're destructuring correctly
   const imagePath = req.file ? req.file.path : null; // Get the path of the uploaded file
 
-  // Log the received values
+  // Log the received values to check what is being sent
   console.log({ name, email, username, password, image: imagePath }); // Log the values you received
 
   try {
