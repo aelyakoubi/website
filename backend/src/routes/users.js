@@ -9,7 +9,6 @@ import sendWelcomeEmail from "../services/email/sendWelcomeEmail.js"; // Importi
 import auth from "../middleware/auth.js";
 import multer from "multer";
 
-
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,7 +21,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-
 const router = Router();
 
 // User validation rules
@@ -31,14 +29,19 @@ const userValidationRules = () => {
     body('name').notEmpty().withMessage('Name is required'),
     body('email').isEmail().withMessage('Invalid email format'),
     body('username').notEmpty().withMessage('Username is required'),
-    body('password').optional().isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
+    body('password')
+      .notEmpty().withMessage('Password is required')
+      .isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
   ];
 };
 
 // Signup route with multer middleware
 router.post('/signup', upload.single('image'), async (req, res) => {
-  const { name, email, username, password } = req.body;
+  const { name, email, username, password } = req.body; // Ensure you're destructuring correctly
   const imagePath = req.file ? req.file.path : null; // Get the path of the uploaded file
+
+  // Log the received values
+  console.log({ name, email, username, password, image: imagePath }); // Log the values you received
 
   try {
     const user = await createUser({
@@ -49,15 +52,13 @@ router.post('/signup', upload.single('image'), async (req, res) => {
       image: imagePath, // Save the image path as a string
     });
 
-    // Send welcome email or any additional logic
-    // await sendWelcomeEmail(user);
-    
     res.status(200).json({ message: 'User created successfully', user });
   } catch (error) {
     console.error("User creation error:", error);
     res.status(400).json({ message: error.message });
   }
 });
+
 
 // Get all users
 router.get("/", async (req, res, next) => {
@@ -66,29 +67,6 @@ router.get("/", async (req, res, next) => {
     res.json(users);
   } catch (error) {
     next(error);
-  }
-});
-
-// Create a new user
-router.post("/", userValidationRules(), async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  const { name, email, username, password } = req.body;
-
-  try {
-    const newUser = await createUser(name, email, username, password);
-    res.status(201).json(newUser);
-  } catch (error) {
-    if (error.message.includes('Email already exists')) {
-      return res.status(409).json({ message: 'This email is already registered.' });
-    } else if (error.message.includes('Username already exists')) {
-      return res.status(409).json({ message: 'This username is already taken.' });
-    } else {
-      return res.status(400).json({ message: 'An error occurred during user creation.' });
-    }
   }
 });
 

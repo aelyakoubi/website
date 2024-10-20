@@ -15,7 +15,7 @@ async function main() {
   for (const category of categories) {
     await prisma.category.upsert({
       where: { id: category.id },
-      update: {},
+      update: { name: category.name }, // Add fields to update if necessary
       create: category,
     });
   }
@@ -60,7 +60,7 @@ async function main() {
 
         await prisma.event.upsert({
           where: { id: event.id },
-          update: {},
+          update: { title: event.title }, // Add fields to update if necessary
           create: {
             id: event.id,
             title: event.title,
@@ -70,7 +70,7 @@ async function main() {
             location: event.location,
             image: event.image,
             categories: {
-              connect: event.categoryIds.map((id) => ({ id })),
+              connect: event.categoryIds.map((id) => ({ id })), // Connect categories
             },
             createdBy: {
               connect: { id: event.createdBy }, // Connect to existing user

@@ -5,6 +5,9 @@ const prisma = new PrismaClient();
 
 const createUser = async (name, email, username, password, image = null) => {
   try {
+    // Log the user data for debugging
+    console.log({ name, email, username, password, image });
+
     // Check if the email or username already exists
     const existingUser = await prisma.user.findFirst({
       where: {
@@ -23,6 +26,11 @@ const createUser = async (name, email, username, password, image = null) => {
       if (existingUser.username === username) {
         throw new Error('Username already exists');
       }
+    }
+
+    // Ensure the password is not undefined or empty
+    if (!password) {
+      throw new Error('Password is required');
     }
 
     // Hash the password
