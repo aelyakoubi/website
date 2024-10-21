@@ -84,7 +84,7 @@ export const EventPage = () => {
           navigate("/");
           alert("Event deleted successfully!");
         } else {
-          throw new Error("Failed to delete event");
+          throw new Error("Failed to delete event!");
         }
       })
       .catch((error) => {

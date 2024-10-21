@@ -22,7 +22,7 @@ const prisma = new PrismaClient({
 const app = express();
 
 // Trust first proxy if needed (uncomment if applicable)
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 // Use Helmet middleware for security headers
 app.use(helmet());

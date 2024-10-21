@@ -6,17 +6,16 @@ const authMiddleware = (req, res, next) => {
   let token = req.headers.authorization;
   const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key';
 
-  // Debugging, should be removed in production
-//// console log auth secret key, removed for security reasons
-
+  // Log the token from local storage for debugging purposes
+  console.log(localStorage.getItem('token'));
 
   if (!token) {
     return res.status(401).json({ message: 'You cannot access this operation without a token!' });
   }
 
-  // Check if token starts with "Bearer " and remove it if necessary
-  if (token.startsWith("Bearer ")) {
-    token = token.slice(7, token.length).trim();
+  // Check if token starts with "Token " and remove it if necessary
+  if (token.startsWith("Token ")) {
+    token = token.slice(6, token.length).trim();
   }
 
   // Verifying the token
@@ -26,7 +25,7 @@ const authMiddleware = (req, res, next) => {
       return res.status(403).json({ message: 'Invalid token provided!' });
     }
 
-    // Use 'id' instead of 'userId' since the token contains 'id'
+    // Log the decoded token for debugging purposes
     console.log("Decoded token:", decoded);
     req.user = {
       id: decoded.id,  // Ensure 'id' from the token is assigned

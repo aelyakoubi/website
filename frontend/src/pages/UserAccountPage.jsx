@@ -23,7 +23,7 @@ const UserAccount = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/users`); // Update endpoint here
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`); // Update endpoint here
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
         setUserData(data);
@@ -52,16 +52,21 @@ const UserAccount = () => {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
-
+  
+    // Log the token for debugging
+    const token = localStorage.getItem('token');
+    console.log('Token being used for update:', token);
+  
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, { // Update endpoint here
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`, {
         method: 'PUT',
         headers: {
+          'Authorization': `Token ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedUser),
       });
-
+  
       if (!response.ok) throw new Error('Failed to update user details');
       setSuccessMessage('User details updated successfully.');
       setUserData({ ...userData, ...updatedUser });
@@ -69,12 +74,16 @@ const UserAccount = () => {
       setErrorMessage(error.message);
     }
   };
+  
 
   // Handle deleting the account
   const handleDeleteAccount = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, { // Update endpoint here
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
       });
 
       if (!response.ok) throw new Error('Failed to delete account');
@@ -90,8 +99,11 @@ const UserAccount = () => {
   // Handle deleting an event
   const handleDeleteEvent = async (eventId) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/events/${eventId}`, { // Update endpoint here
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/events/${eventId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Token ${localStorage.getItem('token')}`,
+        },
       });
 
       if (!response.ok) throw new Error('Failed to delete event');
@@ -149,17 +161,23 @@ const UserAccount = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {userData.events.map((event) => (
-            <Tr key={event.id}>
-              <Td>{event.name}</Td>
-              <Td>{event.date}</Td>
-              <Td>
-                <Button colorScheme="red" onClick={() => handleDeleteEvent(event.id)}>
-                  Delete
-                </Button>
-              </Td>
+          {Array.isArray(userData.events) && userData.events.length > 0 ? (
+            userData.events.map((event) => (
+              <Tr key={event.id}>
+                <Td>{event.name}</Td>
+                <Td>{event.date}</Td>
+                <Td>
+                  <Button colorScheme="red" onClick={() => handleDeleteEvent(event.id)}>
+                    Delete
+                  </Button>
+                </Td>
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan="3" textAlign="center">No events found.</Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
       </Table>
 
@@ -169,6 +187,6 @@ const UserAccount = () => {
       </Button>
     </Flex>
   );
-}
+};
 
 export default UserAccount;

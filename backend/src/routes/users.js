@@ -35,23 +35,30 @@ const userValidationRules = () => {
   ];
 };
 
-// Signup route with multer middleware
-router.post('/signup', upload.single('image'), async (req, res) => {
+// Signup route with multer middleware and email sending
+router.post('/signup', upload.single('image'), userValidationRules(), async (req, res) => {
   // Destructure fields from req.body
-  const { name, email, username, password } = req.body; // Ensure you're destructuring correctly
-  const imagePath = req.file ? req.file.path : null; // Get the path of the uploaded file
+  const { name, email, username, password } = req.body;
+  const imagePath = req.file ? req.file.path : null;
 
-  // Log the received values to check what is being sent
-  console.log({ name, email, username, password, image: imagePath }); // Log the values you received
+  // Validate incoming data
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
   try {
+    // Create the user
     const user = await createUser({
       name,
       email,
       username,
       password,
-      image: imagePath, // Save the image path as a string
+      image: imagePath,
     });
+
+    // Send welcome email after user creation
+    await sendWelcomeEmail(email, username); // Pass the email and username to the function
 
     res.status(200).json({ message: 'User created successfully', user });
   } catch (error) {
@@ -59,6 +66,7 @@ router.post('/signup', upload.single('image'), async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 });
+
 
 
 // Get all users
