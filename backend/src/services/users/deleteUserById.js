@@ -1,12 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
+
 const deleteUserById = async (id) => {
-  const prisma = new PrismaClient();
-  const user = await prisma.user.deleteMany({
+ 
+
+  // Delete user's events first
+  await prisma.event.deleteMany({
+    where: { createdBy: id },
+  });
+
+  // Delete the user
+  const deletedUser = await prisma.user.delete({
     where: { id },
   });
 
-  return user.count > 0 ? id : null;
+  return deletedUser ? id : null; // Return user id if deleted successfully
 };
 
 export default deleteUserById;

@@ -30,7 +30,13 @@ export const EventsPage = () => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/events`);
+      // Only include token if the user is authenticated
+      const token = isAuthenticated() ? localStorage.getItem("token") : null;
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/events`, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}), // Add token if it exists
+        },
+      });
       const data = await response.json();
       if (Array.isArray(data)) {
         setEvents(data);
@@ -47,7 +53,12 @@ export const EventsPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include Bearer token in headers
+        },
+      });
       const data = await response.json();
       setCategories(data);
       console.log("Fetched Categories:", data);

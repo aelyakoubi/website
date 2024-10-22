@@ -1,34 +1,27 @@
-// backend/src/middleware/auth.js
-
 import jwt from 'jsonwebtoken';
 
 const authMiddleware = (req, res, next) => {
-  let token = req.headers.authorization;
+  const authHeader = req.headers.authorization;
+
+  // Check if the Authorization header exists
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Unauthorized: No token provided!' });
+  }
+
+  // Extract token, supporting Bearer scheme
+  const token = authHeader.startsWith("Bearer ") ? authHeader.slice(7).trim() : authHeader.trim(); 
+
   const secretKey = process.env.AUTH_SECRET_KEY || 'my-secret-key';
 
-  // Log the token from local storage for debugging purposes
-  console.log(localStorage.getItem('token'));
-
-  if (!token) {
-    return res.status(401).json({ message: 'You cannot access this operation without a token!' });
-  }
-
-  // Check if token starts with "Token " and remove it if necessary
-  if (token.startsWith("Token ")) {
-    token = token.slice(6, token.length).trim();
-  }
-
-  // Verifying the token
+  // Verify the token
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      console.log("Token verification failed:", err);
-      return res.status(403).json({ message: 'Invalid token provided!' });
+      return res.status(403).json({ message: 'Invalid token!' });
     }
 
-    // Log the decoded token for debugging purposes
-    console.log("Decoded token:", decoded);
+    // Attach user info to the request object
     req.user = {
-      id: decoded.id,  // Ensure 'id' from the token is assigned
+      id: decoded.id,
       username: decoded.username,
     };
 

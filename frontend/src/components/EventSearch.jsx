@@ -7,19 +7,19 @@ export const EventSearch = ({ events, setFilteredEvents }) => {
   const handleSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase();
     setSearchTerm(searchTerm);
-  
+
     const filteredEvents = events.filter((event) => {
       const title = event.title ? event.title.toLowerCase() : ""; // Handle undefined title
       const category = event.category ? event.category.toLowerCase() : ""; // Handle undefined category
-  
+
       const titleMatch = title.includes(searchTerm);
       const categoryMatch = category.includes(searchTerm);
-  
+
       return titleMatch || categoryMatch;
     });
-  
+
     console.log("Filtered Events:", filteredEvents); // Debugging line
-  
+
     setFilteredEvents(filteredEvents);
   };
 
@@ -30,13 +30,11 @@ export const EventSearch = ({ events, setFilteredEvents }) => {
       value={searchTerm}
       onChange={handleSearch}
       width={["30%", "30%"]}
-      pl = {50}
+      pl={50}
       ml={50}
       mt={10}
       borderColor={"black"}
       borderStyle={"solid"}
-     
-      
     />
   );
 };

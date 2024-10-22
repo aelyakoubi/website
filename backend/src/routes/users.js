@@ -6,6 +6,7 @@ import getUserById from "../services/users/getUserById.js";
 import deleteUserById from "../services/users/deleteUserById.js";
 import updateUserById from "../services/users/updateUserById.js";
 import sendWelcomeEmail from "../services/email/sendWelcomeEmail.js"; // Importing sendWelcomeEmail
+import sendDeleteEmail from "../services/email/sendDeleteEmail.js"; // Importing sendDeleteEmail
 import auth from "../middleware/auth.js";
 import multer from "multer";
 
@@ -163,10 +164,13 @@ router.put("/useraccount", auth, userValidationRules(), async (req, res, next) =
 // Delete user account and associated events
 router.delete("/useraccount", auth, async (req, res, next) => {
   try {
-    await prisma.event.deleteMany({ where: { createdBy: req.user.id } }); // Delete all events created by the user
-    await prisma.user.delete({ where: { id: req.user.id } }); // Delete the user account
+    const userId = req.user.id; // Assuming you get user ID from the auth middleware
+    const userEmail = req.user.email; // Get the user's email
 
-    res.json({ message: 'Account and associated events deleted successfully' });
+    await deleteUserById(userId); // Call the delete service
+    await sendDeleteEmail(userEmail); // Send confirmation email
+
+    res.json({ message: 'Account and associated events deleted successfully. A confirmation email has been sent.' });
   } catch (error) {
     next(error);
   }

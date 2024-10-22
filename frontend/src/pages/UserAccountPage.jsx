@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Table, Thead, Tbody, Tr, Th, Td, Flex, Heading } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Table, Thead, Tbody, Tr, Th, Td, Flex, Heading, useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
 const UserAccount = () => {
@@ -15,15 +15,14 @@ const UserAccount = () => {
     email: '',
   });
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+  const toast = useToast(); // Initialize toast
 
   // Fetch user account data on component mount
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`); // Update endpoint here
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`);
         if (!response.ok) throw new Error('Failed to fetch user data');
         const data = await response.json();
         setUserData(data);
@@ -50,49 +49,73 @@ const UserAccount = () => {
   // Update user info (username and email)
   const handleUpdateUser = async (e) => {
     e.preventDefault();
-    setErrorMessage('');
-    setSuccessMessage('');
-  
-    // Log the token for debugging
+
     const token = localStorage.getItem('token');
     console.log('Token being used for update:', token);
-  
+
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Token ${token}`,
+          'Authorization': `Bearer ${token}`, // Use Bearer token
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedUser),
       });
-  
+
       if (!response.ok) throw new Error('Failed to update user details');
-      setSuccessMessage('User details updated successfully.');
+      toast({
+        title: 'Success',
+        description: 'User details updated successfully.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
       setUserData({ ...userData, ...updatedUser });
     } catch (error) {
-      setErrorMessage(error.message);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
-  
 
   // Handle deleting the account
   const handleDeleteAccount = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Token ${localStorage.getItem('token')}`,
-        },
-      });
+    const confirmDelete = window.confirm("Are you sure you want to delete your account? All your events will be deleted permanently!");
 
-      if (!response.ok) throw new Error('Failed to delete account');
-      setSuccessMessage('Account deleted. Redirecting to homepage...');
-      setTimeout(() => {
-        navigate('/'); // Redirect to homepage after deleting account
-      }, 2000);
-    } catch (error) {
-      setErrorMessage(error.message);
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/users/useraccount`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use Bearer token
+          },
+        });
+
+        if (!response.ok) throw new Error('Failed to delete account');
+        toast({
+          title: 'Account Deleted',
+          description: 'Your account has been deleted. A confirmation email has been sent.',
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate('/'); // Redirect to homepage after deleting account
+        }, 2000);
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: error.message,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     }
   };
 
@@ -102,7 +125,7 @@ const UserAccount = () => {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/users/events/${eventId}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Token ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`, // Use Bearer token
         },
       });
 
@@ -111,9 +134,21 @@ const UserAccount = () => {
         ...userData,
         events: userData.events.filter((event) => event.id !== eventId),
       });
-      setSuccessMessage('Event deleted successfully.');
+      toast({
+        title: 'Event Deleted',
+        description: 'Event deleted successfully.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
-      setErrorMessage(error.message);
+      toast({
+        title: 'Error',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -121,10 +156,8 @@ const UserAccount = () => {
     <Flex direction="column" align="center" p={2} flexGrow={1}>
       <Box maxW="400px" w="100%">
         <Heading as="h1" fontSize="1.8em" mb={2}>
-          <Text fontSize="2xl" mb={5}>Account Details</Text> 
+          <Text fontSize="2xl" mb={5}>Account Details</Text>
         </Heading>
-        {errorMessage && <Text color="red.500">{errorMessage}</Text>}
-        {successMessage && <Text color="green.500">{successMessage}</Text>}
       </Box>
 
       {/* User Account Details */}  

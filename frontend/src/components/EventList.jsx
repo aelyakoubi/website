@@ -22,7 +22,7 @@ export const EventList = ({ filteredEvents, handleEventClick, getCategoryName })
             w="250px"
             bg="white"
             align="center"
-            bgImage={`url(${event.image})`}
+            bgImage={`url(${event.image})`} // Background image of the event
             bgSize="cover"
             bgPosition="center"
             borderRadius="15px"
@@ -40,31 +40,31 @@ export const EventList = ({ filteredEvents, handleEventClick, getCategoryName })
               boxShadow: "0 0 8px 2px rgba(128, 78, 254, 0.5)",
             }}
             _focus={{ outline: "4px auto -webkit-focus-ring-color" }}
-            onClick={() => handleEventClick(event.id)}
+            onClick={() => handleEventClick(event.id)} // Handle click event
           >
             <Box p="1" bg="rgba(255, 255, 255, 0.3)">
               <Heading as="h2" mb={5} size="md" fontWeight={"extrabold"}>
-                {event.title}
+                {event.title} // Display the event title
               </Heading>
-              <Text isTruncated>{event.description}</Text>
-              <Text>{new Date(event.startTime).toLocaleString()}</Text>
-              <Text>{new Date(event.endTime).toLocaleString()}</Text>
-              <Text>{event.location}</Text>
+              <Text isTruncated>{event.description}</Text> // Shortened description
+              <Text>{new Date(event.startTime).toLocaleString()}</Text> // Formatted start time
+              <Text>{new Date(event.endTime).toLocaleString()}</Text> // Formatted end time
+              <Text>{event.location}</Text> // Display the event location
               <Text>
                 {event.categoryIds && Array.isArray(event.categoryIds) && event.categoryIds.length > 0 ? (
                   event.categoryIds.map(id => {
-                    const name = getCategoryName(id);
+                    const name = getCategoryName(id); // Get the category name using the provided function
                     return name;
-                  }).join(', ')
+                  }).join(', ') // Join category names into a string
                 ) : (
-                  "No event categories are filled in."
+                  "No event categories are filled in." // Fallback message if no categories are found
                 )}
               </Text>
             </Box>
           </Box>
         ))
       ) : (
-        <Text>No events found.</Text>
+        <Text>No events found.</Text> // Message when no events are available
       )}
     </Stack>
   );

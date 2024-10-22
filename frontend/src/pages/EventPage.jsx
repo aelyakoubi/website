@@ -13,23 +13,50 @@ export const EventPage = () => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchEventData = async () => {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include Bearer token in the request
+          },
+        });
+        const data = await response.json();
         setEvent(data);
         setEditedEvent(data);
-        return fetch(`${import.meta.env.VITE_API_URL}/users/${data.createdBy}`);
-      })
-      .then((response) => response.json())
-      .then((userData) => setEventUser(userData))
-      .catch((error) => console.log("Error fetching data:", error));
+
+        const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/users/${data.createdBy}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include Bearer token in the request
+          },
+        });
+        const userData = await userResponse.json();
+        setEventUser(userData);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchEventData();
   }, [eventId]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/categories`)
-      .then((response) => response.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.log("Error fetching categories:", error));
+    const fetchCategories = async () => {
+      const token = localStorage.getItem("token"); // Retrieve token from localStorage
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include Bearer token in the request
+          },
+        });
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.log("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, []);
 
   const handleInputChange = (event) => {
@@ -41,12 +68,12 @@ export const EventPage = () => {
   };
 
   const handleUpdateEvent = () => {
-    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+    const token = localStorage.getItem("token"); // Retrieve token from localStorage
     fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`, // Include Bearer token in the request
       },
       body: JSON.stringify(editedEvent),
     })
@@ -71,12 +98,12 @@ export const EventPage = () => {
   };
 
   const handleDeleteEvent = () => {
-    const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
+    const token = localStorage.getItem("token"); // Retrieve token from localStorage
     fetch(`${import.meta.env.VITE_API_URL}/events/${eventId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token, // Include the token in the Authorization header
+        Authorization: `Bearer ${token}`, // Include Bearer token in the request
       },
     })
       .then((response) => {
@@ -112,7 +139,7 @@ export const EventPage = () => {
             objectFit="cover"
           />
         )}
-       
+
         <form>
           <label>
             Title:
@@ -166,7 +193,7 @@ export const EventPage = () => {
               <Text fontSize="sm">{eventUser.name}</Text>
             </Box>
           )}
-          
+
           <label>
             Description:
             <Input

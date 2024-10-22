@@ -45,9 +45,10 @@ const SignUpPage = () => {
 
     try {
       // Call handleSignUp and pass all the form data
-      await handleSignUp(name, email, username, password, imageFile, navigate);
+      const token = await handleSignUp(name, email, username, password, imageFile); // Assuming it returns a token
+      localStorage.setItem('token', token); // Store the token
       setSuccessMessage('Sign-up successful! Redirecting...');
-      
+
       setTimeout(() => {
         navigate('/'); // Redirect to the homepage after 2 seconds
       }, 2000);

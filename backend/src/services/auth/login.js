@@ -1,10 +1,4 @@
 // backend/src/services/auth/login.js
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-
-const prisma = new PrismaClient();
-
 const login = async (identifier, password) => {
   try {
     // Check if identifier is an email or username
@@ -33,12 +27,12 @@ const login = async (identifier, password) => {
       expiresIn: '1h',
     });
 
-    return token;
+    // Return the token with the Bearer prefix
+    return `Bearer ${token}`; // Add Bearer prefix here
   } catch (error) {
     console.error("Login error:", error.message);
     throw error;
   }
 };
-
 
 export default login;

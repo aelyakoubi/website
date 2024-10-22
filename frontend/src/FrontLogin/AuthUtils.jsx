@@ -43,8 +43,13 @@ export const handleSignUp = async (name, email, username, password, imageFile, n
       formData.append('image', imageFile);  // Append the image file if present
     }
 
+    const token = localStorage.getItem('token'); // Retrieve the token
+
     const response = await fetch(`${import.meta.env.VITE_API_URL}/users/signup`, {
       method: "POST",
+      headers: {
+        'Authorization': `Bearer ${token}`, // Include the token with the Bearer prefix
+      },
       body: formData,  // Send formData, not JSON
     });
 
@@ -67,4 +72,24 @@ export const handleSignUp = async (name, email, username, password, imageFile, n
 export const isAuthenticated = () => {
   const token = localStorage.getItem('token');
   return !!token;
+};
+
+// Function to fetch user data with Bearer token
+export const fetchUserData = async () => {
+  const token = localStorage.getItem('token'); // Retrieve the token
+
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/protected-route`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`, // Correctly include the Bearer prefix
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to fetch user data');
+  }
+
+  return await response.json();
 };

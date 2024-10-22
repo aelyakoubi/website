@@ -17,7 +17,7 @@ import {
   Button,
   Divider,
   Link,
-  ModalFooter, // Ensure you have this import
+  ModalFooter,
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { PasswordField } from "../FrontLogin/PasswordField";
