@@ -28,6 +28,5 @@ const transporter = nodemailer.createTransport({
   } catch (error) {
     console.error('Error sending deletion email:', error);
   }
-};
 
 export default sendDeleteEmail;
