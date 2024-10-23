@@ -49,6 +49,5 @@ const sendDeleteEmail = async (email, username) => {
   } catch (error) {
     console.error('Error sending emails:', error);
   }
-};
 
 export default sendDeleteEmail;
