@@ -31,7 +31,7 @@ export const handleLogin = async (identifier, password, onClose, navigate) => {
 };
 
 // handleSignUp function
-export const handleSignUp = async (name, email, username, password, imageFile, navigate) => {
+export const handleSignUp = async (name, email, username, password, imageFile) => {
   try {
     // Create a FormData object to send both file and text data
     const formData = new FormData();
@@ -43,30 +43,27 @@ export const handleSignUp = async (name, email, username, password, imageFile, n
       formData.append('image', imageFile);  // Append the image file if present
     }
 
-    const token = localStorage.getItem('token'); // Retrieve the token
-
     const response = await fetch(`${import.meta.env.VITE_API_URL}/users/signup`, {
       method: "POST",
-      headers: {
-        'Authorization': `Bearer ${token}`, // Include the token with the Bearer prefix
-      },
+      // Removed the 'Authorization' header because signup generally doesn't require auth
       body: formData,  // Send formData, not JSON
     });
 
     if (response.ok) {
       const data = await response.json();
       console.log("Sign-up successful", data);
-      navigate('/'); // Redirect after successful signup
+      return data.token;  // Return token or any other data if needed
     } else {
       const errorData = await response.json();
       console.error("Sign-up failed:", errorData);
-      alert(errorData.message || "Sign-up failed. Please try again.");  // Display error message
+      throw new Error(errorData.message || "Sign-up failed. Please try again.");
     }
   } catch (error) {
     console.error("Sign-up error:", error);
-    alert("An error occurred during sign-up. Please try again.");
+    throw error;  // Re-throw the error to be handled in the calling function
   }
 };
+
 
 // isAuthenticated function remains the same
 export const isAuthenticated = () => {

@@ -1,4 +1,11 @@
 // backend/src/services/auth/login.js
+
+import { PrismaClient } from '@prisma/client'; // Import Prisma Client
+import bcrypt from 'bcrypt'; // Import bcrypt for password hashing
+import jwt from 'jsonwebtoken'; // Import jsonwebtoken for token generation
+
+const prisma = new PrismaClient(); // Initialize Prisma Client
+
 const login = async (identifier, password) => {
   try {
     // Check if identifier is an email or username

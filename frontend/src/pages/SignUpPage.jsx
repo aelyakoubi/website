@@ -5,6 +5,9 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'; // Import icons for sh
 import { handleSignUp } from '../FrontLogin/AuthUtils'; // Ensure the path to AuthUtils is correct
 
 const SignUpPage = () => {
+
+const navigate = useNavigate(); // Get the navigation function
+
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -17,7 +20,6 @@ const SignUpPage = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
-  const navigate = useNavigate(); // Initialize navigate hook
 
   // Function to handle input changes (name, username, email, password)
   const handleInputChange = (e) => {
@@ -38,25 +40,26 @@ const SignUpPage = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage(''); // Reset error message
-    setSuccessMessage(''); // Reset success message
-
+    setErrorMessage('');
+    setSuccessMessage('');
+  
     const { name, email, username, password, imageFile } = formData;
-
+  
     try {
-      // Call handleSignUp and pass all the form data
-      const token = await handleSignUp(name, email, username, password, imageFile); // Assuming it returns a token
-      localStorage.setItem('token', token); // Store the token
+      const token = await handleSignUp(name, email, username, password, imageFile);
+      if (token) {
+        localStorage.setItem('token', token); // Store the token if returned
+      }
       setSuccessMessage('Sign-up successful! Redirecting...');
-
+  
       setTimeout(() => {
         navigate('/'); // Redirect to the homepage after 2 seconds
       }, 2000);
     } catch (error) {
-      console.error("Sign-up error:", error); // Log the error for debugging
-      setErrorMessage(error.response?.data?.message || 'Sign-up failed. Please try again.');
+      setErrorMessage(error.message || 'Sign-up failed. Please try again.');
     }
   };
+  
 
   return (
     <Box maxW="md" mx="auto" mt={10}>

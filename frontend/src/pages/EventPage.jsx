@@ -116,7 +116,7 @@ export const EventPage = () => {
       })
       .catch((error) => {
         console.error("Error deleting event:", error);
-        alert("Failed to delete event!");
+        alert("Failed to delete event! You are not allowd to delete this event. ONLY the creator of the event can delete it.");
       });
   };
 

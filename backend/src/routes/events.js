@@ -80,9 +80,14 @@ router.delete("/:id", auth, async (req, res, next) => {
       });
     }
   } catch (error) {
-    next(error);
+    if (error.message === 'Not authorized to delete this event') {
+      res.status(403).json({ message: 'You are not authorized to delete this event' });
+    } else {
+      next(error); // Handle other errors
+    }
   }
 });
+
 
 router.put("/:id", auth, async (req, res, next) => {
   try {
