@@ -41,9 +41,12 @@ npm run start    (for the backend, will start on port: 3000)
 npx prisma studio 
 
 ```The .env file is included for testing!```
-``` The integration test still need to be modified for this project due many changes.```
+``` The integration/unit test still need to be modified for this project due many changes.```
+
 ```EMAIL_USER=your-email@gmail.com```
-```EMAIL_PASS=your-email-password    // You can add your own for testing if you download the website!```
+```EMAIL_PASS=your-email-password    // You can add your own credentials for testing if you download the website! Outlook or other with the SMTP, TLS etc. Ps: do not forget to change that in all the send.....Email.js files``` 
+
+Or you choose the easy way and test it trough my website see link above.
 
 
 
