@@ -1,3 +1,7 @@
+UNDER CONSTRUCTION 
+
+Development & Production  Ready
+
 https://website-frontend-8wnm.onrender.com
 
 It may take up to 50 till 160 seconds for the website to be online due to a free account at Render!
@@ -7,6 +11,7 @@ Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis acc
 If you want to test, log in: 
 
 Username:       ignacio_doe2
+
 Password:       A_2622
 
 Note: Do NOT press on delete the account otherwise you need another  username and password. 
