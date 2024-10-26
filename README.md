@@ -14,7 +14,7 @@ Username:       ignacio_doe2
 
 Password:       A_2622
 
-Note: Do NOT press on delete the account otherwise you need another  username and password. 
+Note: Do NOT press on delete in the useraccountpage, otherwise you need another username and password. 
 
 You can find other usernames and passwords in my github account under website-backend/src/data/users.json.
 
