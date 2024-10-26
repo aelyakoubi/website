@@ -52,7 +52,7 @@ Or you choose the easy way and test it trough my website see link above.
 
 
 
-``` For now this project is done after the docker setup. An admin panel would be nice and more options etc. but because it was only for training and i will not needed.  My next project an 'online-shopping website' will have more features! ```
+``` This project is done after the docker setup and the forgot password logic. My next project an 'E-commerce website' will have more features! ```
 
 - Redux
 - 3e party sign-in/ Third party
