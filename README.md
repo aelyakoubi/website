@@ -10,9 +10,9 @@ Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis acc
 
 If you want to test, log in: 
 
-Username:       ignacio_doe2
+Username:       Wimpie Blok
 
-Password:       A_2622
+Password:       Wimpie1234
 
 Note: Do NOT press on delete in the useraccountpage, otherwise you need another username and password. 
 
