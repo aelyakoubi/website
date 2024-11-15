@@ -4,21 +4,18 @@ Development & Production  Ready
 
 https://website-frontend-8wnm.onrender.com
 
-It may take up to 50 till 160 seconds for the website to be online due to a free account at Render!
+- It may take up to 50 till 160 seconds for the website to be online due to a free account at Render!
 
-Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis account!
+- Het kan tot 50 seconden duren voordat de website online is i.v.m. een gratis account!
+
 
 If you want to test, log in: 
 
 Username:       Wimpie Blok
-
 Password:       Wimpie1234
 
-Note: Do NOT press on delete in the useraccountpage, otherwise you need another username and password. 
+Note: Do NOT press on delete in the useraccountpage, otherwise you need another username and password. You can find other usernames and passwords in my github account under website-backend/src/data/users.json or create an account in de the signup page.
 
-You can find other usernames and passwords in my github account under website-backend/src/data/users.json.
-
-Due it is connected to Render.com and my MySql server.
 
 
 ```Starting up !!!```
@@ -37,18 +34,13 @@ use:  npm audit fix       (if needed)
 npm install
 npm run start    (for the backend, will start on port: 3000)
 
+
 (open the 3e terminal, for the MySql database. So you will have 3 terminals open)
-npx prisma studio 
+npx prisma studio.
+
 
 ```The .env file is included for testing!```
 ``` The integration/unit test still need to be modified for this project due many changes.```
-
-```EMAIL_USER=your-email@gmail.com```
-```EMAIL_PASS=your-email-password    // You can add your own credentials for testing if you download the website! Outlook or other with the SMTP, TLS etc. Ps: do not forget to change that in all the send.....Email.js files``` 
-
-Or you choose the easy way and test it trough my website see link above.
-
-
 
 
 
@@ -63,7 +55,7 @@ Or you choose the easy way and test it trough my website see link above.
 - SEA
 - AWS / S3
 - Mobile App Android and Ios
-- hosting, maybe i will host the project for training
+- hosting
 
 ![Screenshot 2024-10-13 164227](https://github.com/user-attachments/assets/794893f9-1fd0-4bec-b5b6-62a87bd96619)
 ![Screenshot 2024-10-11 142737](https://github.com/user-attachments/assets/92e87063-25ec-4a90-8eac-289aefc715af)
