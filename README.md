@@ -44,7 +44,7 @@ npx prisma studio.
 
 
 
-``` This project is done after the docker setup and the forgot password logic. My next project an 'E-commerce website' will have more features! ```
+``` This project is done after the docker setup, unit-test, apit-test, the forgot password logic and documentation. My next project an 'E-commerce website' will have more features! ```
 
 - Redux
 - 3e party sign-in/ Third party
